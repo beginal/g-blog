@@ -48,7 +48,12 @@ export default function Home() {
         <ProfileCard userStats={userStats} />
       </div>
       <div className="lg:col-span-1 bg-[#3a404d] p-8 rounded-2xl shadow-lg border border-[#3a404d] flex flex-col">
-        <h2 className="text-2xl font-bold text-white mb-4 flex-shrink-0">Articles</h2>
+        <div className="flex justify-between items-center mb-4 flex-shrink-0">
+          <h2 className="text-2xl font-bold text-white">Articles</h2>
+          <Link href="/admin/posts" className="text-sm text-white/60 hover:text-white transition-colors">
+            관리
+          </Link>
+        </div>
         <div className="bg-[#2c313a] p-6 rounded-lg flex-grow flex flex-col justify-between min-h-[450px]">
           <div>
             {paginatedPosts.length > 0 ? (

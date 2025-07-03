@@ -1,7 +1,7 @@
 export type ContentBlock = { type: "paragraph"; text: string } | { type: "dialogue"; character: string; avatar: string; text: string };
 
 export interface BlogPostProps {
-  id: number;
+  id: string;
   title: string;
   date: string;
   tags: string[];
