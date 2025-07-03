@@ -1,22 +1,39 @@
-import React, { useState, useMemo } from "react";
+"use client";
+
+import React, { useState, useMemo, useEffect } from "react";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
-import type { BlogPostProps } from "../types";
-import ProfileCard from "../components/ProfileCard";
+import ProfileCard from "@/components/ProfileCard";
+import { fetchPosts } from "@/data/posts";
+import type { BlogPostProps } from "@/types";
+import Link from "next/link";
 
 const POSTS_PER_PAGE = 8;
 
-const MainPage: React.FC<{ posts: BlogPostProps[]; onPostClick: (id: number) => void; userStats: any }> = ({
-  posts,
-  onPostClick,
-  userStats,
-}) => {
+export default function Home() {
+  const [posts, setPosts] = useState<BlogPostProps[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
+  // userStats는 임시로 여기에 정의합니다. 실제 앱에서는 사용자 인증 후 가져와야 합니다.
+  const initialUserStats = {
+    level: 1,
+    xp: 0,
+    xpToNextLevel: 100,
+  };
+  const [userStats, setUserStats] = useState(initialUserStats);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const fetchedPosts = await fetchPosts();
+      setPosts(fetchedPosts);
+    };
+    getPosts();
+  }, []);
 
   const filteredPosts = useMemo(() => {
     return posts.filter(post =>
       searchQuery
-        ? post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        ? post.title.toLowerCase().includes(searchQuery?.toLowerCase()) ||
           post.content.some(block => block.text.toLowerCase().includes(searchQuery.toLowerCase()))
         : true
     );
@@ -36,14 +53,14 @@ const MainPage: React.FC<{ posts: BlogPostProps[]; onPostClick: (id: number) => 
           <div>
             {paginatedPosts.length > 0 ? (
               paginatedPosts.map(post => (
-                <div
+                <Link
                   key={post.id}
-                  onClick={() => onPostClick(post.id)}
+                  href={`/posts/${post.id}`}
                   className="flex justify-between items-center py-4 border-b border-[#3a404d] last:border-b-0 cursor-pointer group"
                 >
                   <h3 className="text-base text-white/90 group-hover:text-white transition-colors">{post.title}</h3>
                   <span className="text-sm text-white/60 flex-shrink-0 ml-4">{post.date}</span>
-                </div>
+                </Link>
               ))
             ) : (
               <p className="text-center text-white/50 py-8">No posts found.</p>
@@ -92,6 +109,4 @@ const MainPage: React.FC<{ posts: BlogPostProps[]; onPostClick: (id: number) => 
       </div>
     </div>
   );
-};
-
-export default MainPage;
+}

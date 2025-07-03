@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 import { CheckCircle, XCircle } from "lucide-react";
-import type { Quest } from "../types";
+import type { Quest } from "@/types";
 
 const QuestComponent: React.FC<{ quest: Quest; onComplete: (xp: number) => void }> = ({ quest, onComplete }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
