@@ -5,7 +5,13 @@ import { fetchPosts } from "@/data/posts";
 import Link from "next/link";
 import Image from "next/image";
 
-// userStats는 임시로 여기에 정의합니다. 실제 앱에서는 사용자 인증 후 가져와야 합니다.
+export async function generateStaticParams() {
+  const posts = await fetchPosts();
+  return posts.map(post => ({
+    id: post.id.toString(),
+  }));
+}
+
 export default async function PostDetailPage({ params }: any) {
   {
     const posts = await fetchPosts();
