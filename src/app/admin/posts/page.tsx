@@ -1,19 +1,10 @@
 import Link from 'next/link';
 import { fetchPosts } from '@/data/posts';
-import { Trash2, Edit } from 'lucide-react';
+import { Edit } from 'lucide-react';
+import DeleteButton from '@/components/DeleteButton';
 
 export default async function AdminPostsPage() {
   const posts = await fetchPosts();
-
-  const handleDelete = async (id: string) => {
-    if (confirm('정말로 이 게시물을 삭제하시겠습니까?')) {
-      await fetch(`/api/posts/${id}`, {
-        method: 'DELETE',
-      });
-      // 페이지를 새로고침하여 변경 사항 반영
-      window.location.reload();
-    }
-  };
 
   return (
     <div className="max-w-4xl mx-auto bg-[#2c313a] p-8 sm:p-12 rounded-2xl shadow-lg border border-[#3a404d] text-white animate-fade-in">
@@ -40,9 +31,7 @@ export default async function AdminPostsPage() {
                   <Link href={`/admin/posts/${post.id}/edit`} className="text-blue-400 hover:text-blue-300">
                     <Edit size={20} />
                   </Link>
-                  <button onClick={() => handleDelete(post.id)} className="text-red-400 hover:text-red-300">
-                    <Trash2 size={20} />
-                  </button>
+                  <DeleteButton postId={post.id} />
                 </td>
               </tr>
             ))}

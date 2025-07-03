@@ -19,7 +19,7 @@ export default function NewPostPage() {
 
   const handleContentChange = (index: number, field: string, value: string) => {
     const newContent = [...content];
-    // @ts-ignore
+    // @ts-expect-error TS2345: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'ContentBlock'.
     newContent[index][field] = value;
     setContent(newContent);
   };

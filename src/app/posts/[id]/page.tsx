@@ -1,10 +1,10 @@
 import React from "react";
-import { ArrowLeft, Edit, Trash2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import QuestWrapper from "@/components/QuestWrapper";
 import { fetchPosts } from "@/data/posts";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import PostActions from "@/components/PostActions";
 
 export async function generateStaticParams() {
   const posts = await fetchPosts();
@@ -13,23 +13,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PostDetailPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
+export default async function PostDetailPage({ params }: any) {
   const posts = await fetchPosts();
-  const post = posts.find(p => p.id === params.id);
-
-  const handleDelete = async () => {
-    if (confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
-      const res = await fetch(`/api/posts/${params.id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        router.push("/");
-      } else {
-        alert("게시물 삭제에 실패했습니다.");
-      }
-    }
-  };
+  const post = posts.find(p => p.id.toString() === params.id);
 
   if (!post) {
     return <div className="text-white text-center text-xl">게시물을 찾을 수 없습니다.</div>;
@@ -42,14 +28,7 @@ export default async function PostDetailPage({ params }: { params: { id: string 
           <ArrowLeft size={20} />
           목록으로 돌아가기
         </Link>
-        <div className="flex space-x-4">
-          <Link href={`/admin/posts/${post.id}/edit`} className="text-blue-400 hover:text-blue-300">
-            <Edit size={20} />
-          </Link>
-          <button onClick={handleDelete} className="text-red-400 hover:text-red-300">
-            <Trash2 size={20} />
-          </button>
-        </div>
+        <PostActions postId={post.id} />
       </div>
       <div>
         <h1 className="text-4xl font-bold text-center mb-4">{post.title}</h1>
