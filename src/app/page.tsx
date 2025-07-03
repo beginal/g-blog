@@ -20,7 +20,7 @@ export default function Home() {
     xp: 0,
     xpToNextLevel: 100,
   };
-  const [userStats, setUserStats] = useState(initialUserStats);
+  const [userStats] = useState(initialUserStats);
 
   useEffect(() => {
     const getPosts = async () => {

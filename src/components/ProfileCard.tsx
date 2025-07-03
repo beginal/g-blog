@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mail, Phone, Github, Home } from 'lucide-react';
+import Image from 'next/image';
 
 const ProfileCard: React.FC<{ userStats: { level: number; xp: number; xpToNextLevel: number } }> = ({ userStats }) => {
   const xpPercentage = (userStats.xp / userStats.xpToNextLevel) * 100;
@@ -7,13 +8,12 @@ const ProfileCard: React.FC<{ userStats: { level: number; xp: number; xpToNextLe
   return (
     <div className="bg-[#3a404d] rounded-2xl shadow-lg text-white h-full border border-[#3a404d] overflow-hidden flex flex-col">
       <div className="flex-shrink-0">
-        <img
+        <Image
           src="https://source.unsplash.com/random/600x450/?abstract,gradient"
           alt="프로필 배경"
+          width={600}
+          height={450}
           className="w-full h-auto object-cover"
-          onError={e => {
-            e.currentTarget.src = "https://placehold.co/600x450/262b33/ffffff?text=Image+Not+Found";
-          }}
         />
       </div>
       <div className="p-8 flex-grow">
