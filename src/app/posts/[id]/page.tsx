@@ -1,12 +1,10 @@
-"use client";
-
 import React from "react";
 import { ArrowLeft, Edit, Trash2 } from "lucide-react";
 import QuestWrapper from "@/components/QuestWrapper";
 import { fetchPosts } from "@/data/posts";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export async function generateStaticParams() {
   const posts = await fetchPosts();
@@ -21,14 +19,14 @@ export default async function PostDetailPage({ params }: { params: { id: string 
   const post = posts.find(p => p.id === params.id);
 
   const handleDelete = async () => {
-    if (confirm('정말로 이 게시물을 삭제하시겠습니까?')) {
+    if (confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
       const res = await fetch(`/api/posts/${params.id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       if (res.ok) {
-        router.push('/');
+        router.push("/");
       } else {
-        alert('게시물 삭제에 실패했습니다.');
+        alert("게시물 삭제에 실패했습니다.");
       }
     }
   };
