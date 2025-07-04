@@ -1,0 +1,111 @@
+/* ===== CSS 변수 시스템 ===== */
+
+:root {
+  /* ===== 색상 시스템 ===== */
+  /* Primary Colors */
+  --color-primary: #6ee7b7;
+  --color-primary-dark: #5ad1a0;
+  --color-primary-light: #64f0c8;
+  
+  /* Background Colors */
+  --color-bg-primary: #1a1a1a;
+  --color-bg-secondary: #2c313a;
+  --color-bg-tertiary: #3a404d;
+  --color-bg-quaternary: #4a505c;
+  --color-bg-hover: #5a616e;
+  
+  /* Text Colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e5e5e5;
+  --color-text-muted: #a8b2c0;
+  --color-text-disabled: #6b7280;
+  
+  /* Border Colors */
+  --color-border-primary: #3a404d;
+  --color-border-secondary: #4a505c;
+  --color-border-accent: var(--color-primary-light);
+  
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+  
+  /* ===== 간격 시스템 ===== */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+  
+  /* ===== 반지름 시스템 ===== */
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+  
+  /* ===== 그림자 시스템 ===== */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-glow: 0 0 20px rgba(110, 231, 183, 0.3);
+  --shadow-glow-strong: 0 0 30px rgba(110, 231, 183, 0.5);
+  
+  /* ===== 전환 시스템 ===== */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* ===== 타이포그래피 ===== */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-md: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* ===== Z-Index 시스템 ===== */
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-tooltip: 70;
+  --z-toast: 80;
+  
+  /* ===== 레이아웃 ===== */
+  --container-max-width: 1200px;
+  --content-max-width: 768px;
+  --sidebar-width: 280px;
+  --header-height: 70px;
+  --footer-height: 120px;
+}
+
+/* ===== 다크 모드 지원 (미래 확장성) ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* 다크 모드에서는 현재 값 유지 */
+  }
+}
+
+/* ===== 반응형 중단점 ===== */
+:root {
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}

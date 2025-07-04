@@ -1,58 +1,84 @@
-import { getPosts } from "@/lib/api";
-import { createSupabaseServerClient } from "@/lib/supabase";
 import type { BlogPostProps } from "@/types";
+import { 
+  getSupabaseClient, 
+  SupabaseQueryBuilder
+} from '@/lib/api-utils';
 
-
+/**
+ * 모든 게시물 조회 (서버사이드에서 사용)
+ */
 export const fetchPosts = async (): Promise<BlogPostProps[]> => {
   try {
-    const response = await getPosts();
+    console.log("포스트 목록 조회 시작");
     
-    if (!response.success || !response.data) {
-      console.warn("API에서 포스트를 가져올 수 없습니다.");
+    // Supabase 클라이언트 가져오기 (클라이언트/서버 자동 감지)
+    const { supabase } = await getSupabaseClient();
+    const queryBuilder = new SupabaseQueryBuilder(supabase, 'posts');
+    
+    const { data, error } = await queryBuilder.findAll('created_at', false);
+    
+    if (error) {
+      console.error("포스트 목록 조회 에러:", error);
       return [];
     }
 
-    // API 응답을 BlogPostProps 타입에 맞게 변환
-    return response.data.map(post => ({
+    // 데이터 변환: BlogPostProps 타입에 맞게 변환
+    const transformedData = (data || []).map((post: any) => ({
       id: post.id,
-      title: post.title,
-      date: post.date || new Date().toISOString(),
+      title: post.title || '',
       tags: post.tags || [],
-      content: post.content,
-      thumbnail: post.thumbnail,
-      description: post.description || (post.content ? post.content.substring(0, 150) + "..." : ""),
+      content: post.content || '',
+      thumbnail: post.thumbnail || post.description || '',
+      created_at: post.created_at,
+      updated_at: post.updated_at,
+      quest: post.quest
     }));
-  } catch (error) {
-    console.error("포스트 조회 중 오류 발생:", error);
+
+    console.log("포스트 목록 조회 완료:", transformedData.length, "개");
+    return transformedData;
+  } catch (error: any) {
+    console.error("포스트 조회 중 오류 발생:", {
+      message: error.message,
+      stack: error.stack,
+      error
+    });
     return [];
   }
 };
 
+/**
+ * 특정 게시물 조회 (서버사이드에서 사용)
+ */
 export const fetchPostById = async (id: string): Promise<BlogPostProps | null> => {
   try {
-    const supabase = await createSupabaseServerClient();
+    console.log(`포스트 ${id} 조회 시작`);
     
-    const { data, error } = await supabase
-      .from('posts')
-      .select('*')
-      .eq('id', id)
-      .single();
+    // Supabase 클라이언트 가져오기 (클라이언트/서버 자동 감지)
+    const { supabase } = await getSupabaseClient();
+    const queryBuilder = new SupabaseQueryBuilder(supabase, 'posts');
     
-    if (error || !data) {
-      console.warn(`ID ${id}의 포스트를 찾을 수 없습니다.`, error);
+    const { data, error } = await queryBuilder.findById(id);
+    
+    if (error) {
+      console.log(`포스트 ${id}를 찾을 수 없습니다.`);
       return null;
     }
 
-    return {
+    // 데이터 변환: BlogPostProps 타입에 맞게 변환
+    const transformedData: BlogPostProps = {
       id: data.id,
-      title: data.title,
-      date: data.date || new Date().toISOString(),
+      title: data.title || '',
       tags: data.tags || [],
-      content: data.content,
-      thumbnail: data.thumbnail,
-      description: data.description || (data.content ? data.content.substring(0, 150) + "..." : ""),
+      content: data.content || '',
+      thumbnail: data.thumbnail || data.description || '',
+      created_at: data.created_at,
+      updated_at: data.updated_at,
+      quest: data.quest
     };
-  } catch (error) {
+
+    console.log(`포스트 ${id} 조회 완료`);
+    return transformedData;
+  } catch (error: any) {
     console.error(`포스트 ${id} 조회 중 오류 발생:`, error);
     return null;
   }
