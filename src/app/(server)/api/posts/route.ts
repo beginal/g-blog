@@ -12,7 +12,7 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   }
 
   // 데이터 변환: description을 thumbnail으로, 누락된 필드 추가
-  const transformedData = data.map(item => ({
+  const transformedData = data.map((item: any) => ({
     ...item,
     thumbnail: item.description || "",
     description: item.description || "",

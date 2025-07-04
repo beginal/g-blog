@@ -36,12 +36,12 @@ export async function getSupabaseClient(request?: NextRequest) {
   
   // 클라이언트 사이드에서 호출된 경우, 일반 클라이언트 반환
   if (typeof window !== 'undefined') {
-    const { supabase } = require('@/lib/supabase');
+    const { supabase } = await import('@/lib/supabase');
     return { supabase };
   }
   
   // 서버 컴포넌트에서 호출된 경우, 동적 쿠키 접근을 위해 클라이언트 생성
-  const { createSupabaseServerClient } = require('@/lib/supabase');
+  const { createSupabaseServerClient } = await import('@/lib/supabase');
   const supabase = await createSupabaseServerClient();
   return { supabase };
 }

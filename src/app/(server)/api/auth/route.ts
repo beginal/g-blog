@@ -9,7 +9,7 @@ import {
 } from '@/lib/api-utils';
 
 export const GET = withErrorHandler(async (request: NextRequest) => {
-  const { supabase, response } = getSupabaseClient(request);
+  const { supabase } = await getSupabaseClient(request);
   const authHelper = new AuthHelper(supabase);
   
   const session = await authHelper.getSession();
@@ -17,11 +17,11 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   return createResponseWithHeaders({ 
     authenticated: !!session,
     user: session?.user || null 
-  }, response.headers);
+  });
 });
 
 export const POST = withErrorHandler(async (request: NextRequest) => {
-  const { supabase, response } = getSupabaseClient(request);
+  const { supabase } = await getSupabaseClient(request);
   const authHelper = new AuthHelper(supabase);
   const requestUrl = new URL(request.url);
   const action = requestUrl.searchParams.get('action');
@@ -34,7 +34,7 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
         return errorResponse(error.message, 500);
       }
       
-      return createResponseWithHeaders({ success: true }, response.headers);
+      return createResponseWithHeaders({ success: true });
     }
 
     case 'login': {
@@ -51,7 +51,7 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
       return createResponseWithHeaders({ 
         success: true,
         user: data.user 
-      }, response.headers);
+      });
     }
 
     case 'signup': {
@@ -69,7 +69,7 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
         success: true,
         user: data.user,
         needsEmailVerification: data.user && !data.session 
-      }, response.headers);
+      });
     }
 
     default:
