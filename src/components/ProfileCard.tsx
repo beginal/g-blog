@@ -1,76 +1,95 @@
-import React from 'react';
-import { Mail, Phone, Github, Home } from 'lucide-react';
+import React, { memo } from 'react';
+import { Mail, Phone, Github, Home, MapPin, Calendar } from 'lucide-react';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { PROFILE_CONFIG } from '@/config';
+import type { ProfileCardProps } from '@/types';
 
-const ProfileCard: React.FC<{ userStats: { level: number; xp: number; xpToNextLevel: number } }> = ({ userStats }) => {
-  const xpPercentage = (userStats.xp / userStats.xpToNextLevel) * 100;
+const ProfileCard: React.FC<ProfileCardProps> = memo(({ 
+  className, 
+  variant = 'default',
+  showBackground = true,
+  showContactInfo = true 
+}) => {
+  const baseClasses = 'bg-[#3a404d] rounded-2xl shadow-lg text-white border border-[#3a404d] overflow-hidden flex flex-col animate-fade-in';
+  const variantClasses = {
+    default: 'h-full',
+    compact: 'h-auto',
+    minimal: 'bg-transparent border-none shadow-none'
+  };
 
   return (
-    <div className="bg-[#3a404d] rounded-2xl shadow-lg text-white h-full border border-[#3a404d] overflow-hidden flex flex-col">
-      <div className="flex-shrink-0">
+    <div className={cn(baseClasses, variantClasses[variant], className)}>
+      {showBackground && (
+        <div className="flex-shrink-0 relative">
         <Image
-          src="https://source.unsplash.com/random/600x450/?abstract,gradient"
+          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=450&fit=crop&auto=format"
           alt="프로필 배경"
           width={600}
           height={450}
-          className="w-full h-auto object-cover"
+          className="w-full h-48 sm:h-64 md:h-auto object-cover"
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
+          placeholder="blur"
+          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQ1MCIgdmlld0JveD0iMCAwIDYwMCA0NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNDUwIiBmaWxsPSIjM2E0MDRkIi8+Cjwvc3ZnPgo="
         />
-      </div>
-      <div className="p-8 flex-grow">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-3xl font-bold text-white">Your Name</h2>
-          <div className="text-center">
-            <div className="text-xs text-white/70">LEVEL</div>
-            <div className="text-2xl font-bold text-[#6ee7b7]">{userStats.level}</div>
-          </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#3a404d] via-transparent to-transparent"></div>
         </div>
-        {/* XP Bar */}
+      )}
+      <div className="p-6 sm:p-8 flex-grow">
         <div className="mb-6">
-          <div className="flex justify-between text-sm text-white/80 mb-1">
-            <span>XP</span>
-            <span>
-              {userStats.xp} / {userStats.xpToNextLevel}
-            </span>
-          </div>
-          <div className="w-full bg-[#2c313a] rounded-full h-2.5">
-            <div className="bg-[#6ee7b7] h-2.5 rounded-full transition-all duration-500" style={{ width: `${xpPercentage}%` }}></div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{PROFILE_CONFIG.name}</h2>
+          <p className="text-lg text-white/90 mb-2">{PROFILE_CONFIG.title}</p>
+          <div className="flex items-center space-x-4 text-sm text-white/70">
+            <div className="flex items-center space-x-1">
+              <MapPin className="w-4 h-4" />
+              <span>{PROFILE_CONFIG.location}</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <Calendar className="w-4 h-4" />
+              <span>{PROFILE_CONFIG.status}</span>
+            </div>
           </div>
         </div>
-        <p className="text-lg text-white/90 mb-6">Frontend Developer</p>
-        <div className="space-y-2 text-left w-full">
+        
+        {showContactInfo && (
+          <div className="space-y-2">
           <a
-            href="mailto:your.email@example.com"
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-white/10 transition-colors duration-200"
+            href={`mailto:${PROFILE_CONFIG.email}`}
+            className="flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 group"
           >
-            <Mail className="w-5 h-5 text-white/80" />
-            <span>your.email@example.com</span>
+            <Mail className="w-5 h-5 text-white/80 group-hover:text-[#6ee7b7] transition-colors" />
+            <span className="text-sm sm:text-base truncate">{PROFILE_CONFIG.email}</span>
           </a>
-          <div className="flex items-center space-x-3 p-2 rounded-lg">
+          <div className="flex items-center space-x-3 p-3 rounded-lg">
             <Phone className="w-5 h-5 text-white/80" />
-            <span>010-1234-5678</span>
+            <span className="text-sm sm:text-base">{PROFILE_CONFIG.phone}</span>
           </div>
           <a
-            href="https://github.com/your-github"
+            href={PROFILE_CONFIG.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-white/10 transition-colors duration-200"
+            className="flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 group"
           >
-            <Github className="w-5 h-5 text-white/80" />
-            <span>github.com/your-github</span>
+            <Github className="w-5 h-5 text-white/80 group-hover:text-[#6ee7b7] transition-colors" />
+            <span className="text-sm sm:text-base">{PROFILE_CONFIG.github.replace('https://', '')}</span>
           </a>
           <a
-            href="https://your-blog.com"
+            href={PROFILE_CONFIG.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-white/10 transition-colors duration-200"
+            className="flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 group"
           >
-            <Home className="w-5 h-5 text-white/80" />
-            <span>your-blog.com</span>
+            <Home className="w-5 h-5 text-white/80 group-hover:text-[#6ee7b7] transition-colors" />
+            <span className="text-sm sm:text-base">{PROFILE_CONFIG.website.replace('https://', '')}</span>
           </a>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
-};
+});
+
+ProfileCard.displayName = 'ProfileCard';
 
 export default ProfileCard;

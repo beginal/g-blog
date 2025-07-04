@@ -1,11 +1,20 @@
-export type ContentBlock = { type: "paragraph"; text: string } | { type: "dialogue"; character: string; avatar: string; text: string };
+// Re-export all types for convenience
+export * from './common';
+export * from './post';
+export * from './ui';
 
+// Legacy types for backward compatibility
 export interface BlogPostProps {
   id: string;
   title: string;
   date: string;
   tags: string[];
-  content: ContentBlock[];
+  content: string;
+  thumbnail?: string;
+  description?: string;
+  author_id?: string;
+  created_at?: string;
+  updated_at?: string;
   quest?: Quest;
 }
 

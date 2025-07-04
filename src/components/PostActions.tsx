@@ -1,37 +1,72 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, MoreVertical } from 'lucide-react';
+import DeleteButton from './DeleteButton';
+import { useState, memo, useCallback } from 'react';
+import { cn } from '@/lib/utils';
+import type { PostActionsProps } from '@/types';
 
-interface PostActionsProps {
-  postId: string;
-}
+const PostActions = memo(function PostActions({ postId, className, variant = 'default' }: PostActionsProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-export default function PostActions({ postId }: PostActionsProps) {
-  const router = useRouter();
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen(prev => !prev);
+  }, []);
 
-  const handleDelete = async () => {
-    if (confirm('정말로 이 게시물을 삭제하시겠습니까?')) {
-      const res = await fetch(`/api/posts/${postId}`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
-        router.push('/');
-      } else {
-        alert('게시물 삭제에 실패했습니다.');
-      }
-    }
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false);
+  }, []);
+
+  const baseClasses = 'relative';
+  const variantClasses = {
+    default: '',
+    compact: 'space-y-1',
+    minimal: 'opacity-70 hover:opacity-100'
   };
 
   return (
-    <div className="flex space-x-4">
-      <Link href={`/admin/posts/${postId}/edit`} className="text-blue-400 hover:text-blue-300">
-        <Edit size={20} />
-      </Link>
-      <button onClick={handleDelete} className="text-red-400 hover:text-red-300">
-        <Trash2 size={20} />
-      </button>
+    <div className={cn(baseClasses, variantClasses[variant], className)}>
+      {/* Desktop Actions */}
+      <div className="hidden sm:flex space-x-2">
+        <Link 
+          href={`/posts/${postId}/edit`} 
+          className="flex items-center space-x-1 px-3 py-2 bg-[#4a505c] hover:bg-[#5a616e] text-white rounded-md transition-colors group"
+        >
+          <Edit size={16} className="group-hover:text-[#6ee7b7] transition-colors" />
+          <span className="text-sm">수정</span>
+        </Link>
+        <DeleteButton postId={postId} />
+      </div>
+
+      {/* Mobile Menu */}
+      <div className="sm:hidden">
+        <button
+          onClick={toggleMenu}
+          className="p-2 rounded-md hover:bg-[#4a505c] transition-colors"
+          aria-label="메뉴 열기"
+        >
+          <MoreVertical size={20} />
+        </button>
+        
+        {isMenuOpen && (
+          <div className="absolute right-0 top-full mt-2 bg-[#2c313a] border border-[#4a505c] rounded-lg shadow-lg z-10 min-w-[120px]">
+            <Link 
+              href={`/posts/${postId}/edit`}
+              className="flex items-center space-x-2 px-4 py-3 hover:bg-[#3a404d] transition-colors"
+              onClick={closeMenu}
+            >
+              <Edit size={16} />
+              <span className="text-sm">수정</span>
+            </Link>
+            <div className="px-4 py-2">
+              <DeleteButton postId={postId} />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+});
+
+export default PostActions;

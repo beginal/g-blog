@@ -1,0 +1,106 @@
+@import "@toast-ui/editor/dist/toastui-editor.css";
+@import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
+@import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+@import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+@import "prismjs/themes/prism.css";
+
+.toastui-editor-ww-container {
+  background-color: unset !important;
+}
+
+.toastui-editor-md-container {
+  background-color: #2c313a !important;
+}
+
+.toastui-editor-contents {
+  font-size: 12px;
+}
+
+.toastui-editor-contents p,
+.toastui-editor-contents strong {
+  line-height: 1.75rem !important;
+}
+
+.toastui-editor-contents blockquote {
+  padding-left: 1.5em;
+  font-style: italic;
+  color: #a8b2c0;
+  border-color: #64f0c8 !important;
+  border-left: 4px solid #64f0c8;
+  margin: 1.75rem 0;
+}
+
+.toastui-editor-contents strong {
+  color: #64f0c8;
+}
+.toastui-editor-contents ul > li::before {
+  background-color: #64f0c8 !important;
+}
+
+.toastui-editor-contents ul > li:not(:last-of-type) {
+  margin-bottom: 0.8rem;
+}
+
+.toastui-editor-contents ol {
+  color: #64f0c8 !important;
+}
+
+.toastui-editor-contents pre {
+  overflow: auto;
+  white-space: pre-wrap;
+  margin-top: 1.25rem !important;
+  margin-bottom: 1.25rem !important;
+  border-radius: 0.5rem !important;
+  border-left: 4px solid #64f0c8 !important;
+}
+
+.toastui-editor-contents pre > code {
+  word-wrap: break-word;
+}
+
+.toastui-editor-md-preview-highlight::after {
+  background-color: #2c313a !important;
+}
+.toastui-editor-md-preview-highlight {
+  position: unset !important;
+}
+
+.toastui-editor-md-code-block-line-background {
+  border-left: 4px solid #64f0c8 !important;
+}
+
+.toastui-editor-md-code-block-line-background > span {
+  display: block;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.toastui-editor-md-code-block-line-background.start {
+  margin-top: 1.25rem !important;
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+}
+
+.toastui-editor-md-code-block-line-background:has(span > span):not(.start) {
+  margin-bottom: 1.25rem !important;
+  border-bottom-left-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+}
+
+.token.operator {
+  background: unset !important;
+}
+
+.toastui-editor-contents pre code {
+  text-shadow: none !important;
+}
+
+.toastui-editor-md-container .ProseMirror {
+  font-size: 12px;
+  height: 100% !important;
+}
+
+.toastui-editor-md-container .ProseMirror p,
+.toastui-editor-md-container .ProseMirror strong {
+  line-height: 1.75rem !important;
+}
