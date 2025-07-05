@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { fetchPosts } from "@/data/posts";
 import type { BlogPostProps } from "@/types";
+import { COLORS } from "@/config/constants";
 import PostsHeader from "./PostsHeader";
 import PostsList from "./PostsList";
 import Pagination from "./Pagination";
@@ -71,10 +72,19 @@ export default function PostsSection() {
   }, [totalPages]);
 
   return (
-    <div className="lg:col-span-1 bg-[#3a404d] p-6 sm:p-8 rounded-2xl shadow-lg border border-[#3a404d] flex flex-col hover-lift animate-slide-in-right">
+    <div 
+      className="lg:col-span-1 p-6 sm:p-8 rounded-2xl shadow-lg border flex flex-col hover-lift animate-slide-in-right"
+      style={{
+        backgroundColor: COLORS.surfaceLight,
+        borderColor: COLORS.surfaceLight,
+      }}
+    >
       <PostsHeader />
       
-      <div className="bg-[#2c313a] p-6 rounded-lg flex-grow flex flex-col justify-between min-h-[450px]">
+      <div 
+        className="p-4 sm:p-6 rounded-lg flex-grow flex flex-col justify-between min-h-[450px] max-h-[600px] overflow-hidden"
+        style={{ backgroundColor: COLORS.surface }}
+      >
         <PostsList 
           posts={paginatedPosts}
           loading={loading}

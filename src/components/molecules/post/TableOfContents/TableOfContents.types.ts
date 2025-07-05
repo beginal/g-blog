@@ -6,5 +6,7 @@ export interface TocItem {
 
 export interface TableOfContentsProps {
   content: string;
+  title?: string;
   className?: string;
+  containerSelector?: string;
 }

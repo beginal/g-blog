@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { signup } from '@/lib/api/auth';
+import { COLORS } from '@/config/constants';
 
 function SignUpPage() {
   const [email, setEmail] = useState('');
@@ -51,26 +52,55 @@ function SignUpPage() {
 
   return (
     <div className="min-h-[calc(100vh-140px)] flex items-center justify-center">
-      <div className="w-full max-w-md bg-[#2e333c] rounded-lg shadow-xl p-8">
+      <div 
+        className="w-full max-w-md rounded-lg shadow-xl p-8"
+        style={{ backgroundColor: COLORS.surfaceCard }}
+      >
         <div>
           <h2 className="text-2xl font-bold text-center mb-2">
             회원가입
           </h2>
-          <p className="text-center text-sm text-gray-400 mb-8">
+          <p 
+            className="text-center text-sm mb-8"
+            style={{ color: COLORS.textMuted }}
+          >
             이미 계정이 있으신가요?{' '}
-            <Link href="/login" className="font-medium text-blue-500 hover:text-blue-400 transition duration-200">
+            <Link 
+              href="/login" 
+              className="font-medium transition duration-200"
+              style={{ 
+                color: COLORS.info,
+                ':hover': { color: COLORS.primary }
+              }}
+            >
               로그인하기
             </Link>
           </p>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <div className="bg-red-600/20 border border-red-600 text-red-400 px-4 py-2 rounded-md text-sm">
+            <div 
+              className="px-4 py-2 rounded-md text-sm"
+              style={{ 
+                backgroundColor: `${COLORS.error}33`,
+                borderColor: COLORS.error,
+                color: COLORS.error,
+                border: `1px solid ${COLORS.error}`
+              }}
+            >
               {error}
             </div>
           )}
           {successMessage && (
-            <div className="bg-green-600/20 border border-green-600 text-green-400 px-4 py-2 rounded-md text-sm">
+            <div 
+              className="px-4 py-2 rounded-md text-sm"
+              style={{ 
+                backgroundColor: `${COLORS.success}33`,
+                borderColor: COLORS.success,
+                color: COLORS.success,
+                border: `1px solid ${COLORS.success}`
+              }}
+            >
               {successMessage}
             </div>
           )}
@@ -85,7 +115,21 @@ function SignUpPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="w-full px-4 py-2 bg-[#262b33] border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+                style={{
+                  backgroundColor: COLORS.background,
+                  borderColor: COLORS.border,
+                  border: `1px solid ${COLORS.border}`,
+                  color: COLORS.text
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = 'transparent';
+                  e.target.style.boxShadow = `0 0 0 2px ${COLORS.info}`;
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = COLORS.border;
+                  e.target.style.boxShadow = 'none';
+                }}
                 placeholder="이메일을 입력하세요"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -101,7 +145,21 @@ function SignUpPage() {
                 type="password"
                 autoComplete="new-password"
                 required
-                className="w-full px-4 py-2 bg-[#262b33] border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+                style={{
+                  backgroundColor: COLORS.background,
+                  borderColor: COLORS.border,
+                  border: `1px solid ${COLORS.border}`,
+                  color: COLORS.text
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = 'transparent';
+                  e.target.style.boxShadow = `0 0 0 2px ${COLORS.info}`;
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = COLORS.border;
+                  e.target.style.boxShadow = 'none';
+                }}
                 placeholder="비밀번호 (최소 6자)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -117,7 +175,21 @@ function SignUpPage() {
                 type="password"
                 autoComplete="new-password"
                 required
-                className="w-full px-4 py-2 bg-[#262b33] border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+                style={{
+                  backgroundColor: COLORS.background,
+                  borderColor: COLORS.border,
+                  border: `1px solid ${COLORS.border}`,
+                  color: COLORS.text
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = 'transparent';
+                  e.target.style.boxShadow = `0 0 0 2px ${COLORS.info}`;
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = COLORS.border;
+                  e.target.style.boxShadow = 'none';
+                }}
                 placeholder="비밀번호를 다시 입력하세요"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -129,7 +201,21 @@ function SignUpPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition duration-200"
+              className="w-full font-medium py-2 px-4 rounded-md transition duration-200 disabled:cursor-not-allowed"
+              style={{
+                backgroundColor: loading ? `${COLORS.info}80` : COLORS.info,
+                color: COLORS.text
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  e.target.style.backgroundColor = COLORS.primaryHover;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) {
+                  e.target.style.backgroundColor = COLORS.info;
+                }
+              }}
             >
               {loading ? '처리 중...' : '회원가입'}
             </button>

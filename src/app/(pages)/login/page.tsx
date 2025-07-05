@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
+import { COLORS } from '@/config/constants';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -38,7 +39,10 @@ function LoginPage() {
 
   return (
     <div className="min-h-[calc(100vh-140px)] flex items-center justify-center">
-      <div className="w-full max-w-md bg-[#2e333c] rounded-lg shadow-xl p-8">
+      <div 
+        className="w-full max-w-md rounded-lg shadow-xl p-8"
+        style={{ backgroundColor: COLORS.surfaceCard }}
+      >
         <h1 className="text-2xl font-bold text-center mb-8">Login</h1>
         
         <form onSubmit={handleLogin} className="space-y-6">
@@ -52,7 +56,14 @@ function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 bg-[#262b33] border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+              style={{
+                backgroundColor: COLORS.background,
+                '--focus-ring-color': COLORS.info,
+              } as React.CSSProperties}
+              onFocus={(e) => {
+                e.currentTarget.style.ringColor = COLORS.info;
+              }}
               placeholder="Enter your email"
             />
           </div>
@@ -67,7 +78,14 @@ function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 bg-[#262b33] border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+              style={{
+                backgroundColor: COLORS.background,
+                '--focus-ring-color': COLORS.info,
+              } as React.CSSProperties}
+              onFocus={(e) => {
+                e.currentTarget.style.ringColor = COLORS.info;
+              }}
               placeholder="Enter your password"
             />
           </div>
@@ -81,7 +99,21 @@ function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition duration-200"
+            className="w-full disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition duration-200"
+            style={{
+              backgroundColor: COLORS.info,
+              opacity: loading ? 0.5 : 1,
+            }}
+            onMouseEnter={(e) => {
+              if (!loading) {
+                e.currentTarget.style.backgroundColor = '#2563eb'; // blue-700
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!loading) {
+                e.currentTarget.style.backgroundColor = COLORS.info;
+              }
+            }}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
@@ -92,7 +124,14 @@ function LoginPage() {
             계정이 없으신가요?{' '}
             <Link 
               href="/signup" 
-              className="text-blue-500 hover:text-blue-400 font-medium transition duration-200"
+              className="font-medium transition duration-200"
+              style={{ color: COLORS.info }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#60a5fa'; // blue-400
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = COLORS.info;
+              }}
             >
               회원가입
             </Link>

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Upload } from "lucide-react";
+import { COLORS } from "@/config/constants";
 
 interface EditorTitleInputProps {
   mode: "create" | "edit";
@@ -24,7 +25,7 @@ export default function EditorTitleInput({ mode, value, onChange, disabled = fal
         id="title"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full p-3 rounded-lg bg-[#3a404d] border border-[#4a505c] text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#6ee7b7] transition-colors"
+        className="w-full p-3 rounded-lg border text-white placeholder:text-white/50 focus:outline-none focus:ring-2 transition-colors" style={{ backgroundColor: COLORS.surfaceLight, borderColor: COLORS.surfaceLighter, '--tw-ring-color': COLORS.primary } as React.CSSProperties}
         placeholder={placeholder}
         required
         disabled={disabled}

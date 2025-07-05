@@ -2,6 +2,7 @@
 export * from './cn';
 export * from './format';
 export * from './validation';
+export * from './colors';
 export { default as api } from './callApi';
 
 // 추가 헬퍼 함수들

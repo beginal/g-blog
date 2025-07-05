@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { COLORS } from "@/config/constants";
 
 interface PaginationProps {
   currentPage: number;
@@ -11,7 +12,10 @@ export default function Pagination({ currentPage, totalPages, onPrevPage, onNext
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex justify-center items-center gap-4 mt-6 pt-4 border-t border-[#3a404d]">
+    <div 
+      className="flex justify-center items-center gap-4 mt-4 pt-4 border-t flex-shrink-0"
+      style={{ borderTopColor: COLORS.surfaceLight }}
+    >
       <button
         onClick={onPrevPage}
         disabled={currentPage === 1}

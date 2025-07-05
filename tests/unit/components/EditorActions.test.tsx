@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import EditorActions from '@/components/molecules/editor/EditorActions';
+import { COLORS } from '@/config/constants';
 
 describe('EditorActions', () => {
   const mockOnCancel = jest.fn();
@@ -100,8 +101,13 @@ describe('EditorActions', () => {
     const cancelButton = screen.getByRole('button', { name: /취소/i });
     const submitButton = screen.getByRole('button', { name: /게시물 작성/i });
     
-    expect(cancelButton).toHaveClass('bg-[#3a404d]');
-    expect(submitButton).toHaveClass('bg-[#6ee7b7]');
+    // Note: Since we're using inline styles with COLORS constants,
+    // we need to check the computed styles or data attributes instead of classes
+    const cancelButtonStyle = getComputedStyle(cancelButton);
+    const submitButtonStyle = getComputedStyle(submitButton);
+    
+    expect(cancelButtonStyle.backgroundColor).toBe(COLORS.surfaceLight);
+    expect(submitButtonStyle.backgroundColor).toBe(COLORS.primary);
   });
 
   test('flex 레이아웃이 적용되어야 함', () => {

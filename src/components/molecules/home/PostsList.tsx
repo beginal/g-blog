@@ -13,7 +13,7 @@ interface PostsListProps {
 
 export default function PostsList({ posts, loading, error, onRetry }: PostsListProps) {
   return (
-    <div>
+    <div className="overflow-y-auto flex-grow scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
       {loading ? (
         <div className="flex items-center justify-center py-12">
           <LoadingSpinner size="lg" color="primary" />

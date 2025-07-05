@@ -36,8 +36,8 @@ export default async function PostDetailPage({ params }: PageParams) {
           <CommentSection postId={post.id} />
         </div>
 
-        <aside className=" lg:block w-64">
-          <TableOfContents content={post.content} />
+        <aside className="lg:block w-64">
+          <TableOfContents content={post.content} title={post.title} />
         </aside>
       </div>
 

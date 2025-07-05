@@ -52,6 +52,29 @@ const PostContent = memo(({ initialValue }: PostContentProps) => {
   useEffect(() => {
     const loadPrismLanguages = async () => {
       try {
+        // Prism 언어 지원 추가
+        await Promise.all([
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-javascript"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-typescript"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-jsx"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-tsx"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-json"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-css"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-python"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-bash"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-sql"),
+          // @ts-expect-error - prism components에 타입 선언이 없음
+          import("prismjs/components/prism-yaml"),
+        ]);
       } catch (error) {
         console.warn("Prism 언어 로드 실패:", error);
       } finally {
@@ -61,6 +84,68 @@ const PostContent = memo(({ initialValue }: PostContentProps) => {
 
     loadPrismLanguages();
   }, []);
+
+  // Toast UI Editor가 렌더링된 후 헤더에 ID 추가
+  useEffect(() => {
+    if (!isReady) return;
+
+    const addHeaderIds = () => {
+      const container = document.querySelector('.toast-ui-viewer');
+      if (!container) return;
+
+      const headers = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      headers.forEach((header, index) => {
+        if (!header.id) {
+          header.id = `heading-${index}`;
+          console.log(`PostContent: Added ID "${header.id}" to header: "${header.textContent}"`);
+        }
+      });
+    };
+
+    // 여러 번 시도하여 확실하게 ID 추가
+    const timeouts = [100, 500, 1000, 2000];
+    timeouts.forEach(delay => {
+      setTimeout(addHeaderIds, delay);
+    });
+
+    // MutationObserver로 동적 변경 감지
+    const observer = new MutationObserver((mutations) => {
+      // 새로운 노드가 추가되었는지 확인
+      const hasNewContent = mutations.some(mutation => 
+        mutation.addedNodes.length > 0
+      );
+      
+      if (hasNewContent) {
+        setTimeout(addHeaderIds, 100);
+      }
+    });
+
+    // 여러 컨테이너 선택자 시도
+    const containerSelectors = [
+      '.toast-ui-viewer',
+      '.toastui-editor-contents',
+      '.toastui-editor-viewer',
+      '.ProseMirror'
+    ];
+    
+    let container = null;
+    for (const selector of containerSelectors) {
+      container = document.querySelector(selector);
+      if (container) break;
+    }
+
+    if (container) {
+      observer.observe(container, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isReady]);
 
   if (!isReady) {
     return (

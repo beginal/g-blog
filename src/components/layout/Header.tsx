@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
+import { COLORS } from "@/config/constants";
 // 임시 비활성화: 인증 관련 기능
 // TODO: 인증 시스템 재활성화 시 주석 해제
 // import { useAuth } from "@/contexts/AuthContext";
@@ -29,14 +30,20 @@ const Header: React.FC = () => {
   */
 
   return (
-    <header className="bg-[#262b33] text-white fixed top-0 left-0 right-0 h-[55px] flex items-center justify-between px-4 sm:px-8 shadow-lg z-50 border-b border-[#3a404d]">
+    <header 
+      className="text-white fixed top-0 left-0 right-0 h-[55px] flex items-center justify-between px-4 sm:px-8 shadow-lg z-50 border-b"
+      style={{
+        backgroundColor: COLORS.background,
+        borderBottomColor: COLORS.surfaceLight,
+      }}
+    >
       <Link href="/" className="cursor-pointer">
         {/* 임시 로고 이미지 (117px * 24px) */}
         <div
           style={{
             width: "117px",
             height: "24px",
-            backgroundColor: "#1e2228",
+            backgroundColor: COLORS.surfaceDark,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -93,14 +100,29 @@ const Header: React.FC = () => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        className="md:hidden p-2 rounded-md hover:bg-[#3a404d] transition-colors"
+        className="md:hidden p-2 rounded-md transition-colors"
+        style={{ 
+          '--hover-bg': COLORS.surfaceLight 
+        } as React.CSSProperties}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = COLORS.surfaceLight;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'transparent';
+        }}
       >
         {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-[55px] left-0 right-0 bg-[#262b33] border-b border-[#3a404d] shadow-lg">
+        <div 
+          className="md:hidden absolute top-[55px] left-0 right-0 border-b shadow-lg"
+          style={{
+            backgroundColor: COLORS.background,
+            borderBottomColor: COLORS.surfaceLight,
+          }}
+        >
           <nav className="flex flex-col p-4 space-y-3">
             <Link 
               href="/" 

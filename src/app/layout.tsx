@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { COLORS } from "@/config/constants";
 // 임시 비활성화: 인증 컨텍스트
 // TODO: 인증 시스템 재활성화 시 주석 해제
 // import { AuthProvider } from "@/contexts/AuthContext";
@@ -25,7 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* 임시 비활성화: AuthProvider */}
         {/* <AuthProvider> */}
         <Header />
-        <main className="pt-[70px] pb-[70px] min-h-screen flex flex-col items-center bg-[#262b33] text-white">
+        <main 
+          className="pt-[70px] pb-[70px] min-h-screen flex flex-col items-center text-white"
+          style={{ backgroundColor: COLORS.background }}
+        >
           <div className="container mx-auto p-4 sm:p-6 lg:p-4 w-full">{children}</div>
         </main>
         <Footer />

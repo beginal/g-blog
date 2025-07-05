@@ -4,6 +4,7 @@ import React, { forwardRef, memo } from "react";
 import dynamic from "next/dynamic";
 import { Upload } from "lucide-react";
 import { uploadImage } from "@/lib/api/auth";
+import { COLORS } from "@/config/constants";
 import "@/app/styles/editor-optimized.css";
 
 // TuiEditor 컴포넌트 정의
@@ -14,6 +15,30 @@ const TuiEditor = dynamic(
       import("@toast-ui/react-editor"),
       import("@toast-ui/editor-plugin-code-syntax-highlight"),
       import("prismjs"),
+    ]);
+
+    // Prism 언어 지원 추가
+    await Promise.all([
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-javascript"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-typescript"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-jsx"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-tsx"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-json"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-css"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-python"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-bash"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-sql"),
+      // @ts-expect-error - prism components에 타입 선언이 없음
+      import("prismjs/components/prism-yaml"),
     ]);
 
     const EditorComponent = memo(
@@ -49,9 +74,12 @@ const TuiEditor = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-96 bg-[#3a404d] rounded-lg animate-pulse flex items-center justify-center">
+      <div
+        className="w-full h-96 rounded-lg animate-pulse flex items-center justify-center"
+        style={{ backgroundColor: COLORS.surfaceLight }}
+      >
         <div className="flex flex-col items-center gap-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#6ee7b7]"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: COLORS.primary }}></div>
           <p className="text-sm text-white/60">에디터 로딩 중...</p>
         </div>
       </div>
@@ -67,50 +95,48 @@ interface EditorContentProps {
   initialValue?: string;
 }
 
-const EditorContent = forwardRef<any, EditorContentProps>(
-  ({ mode, initialValue = "" }, ref) => {
-    const label = mode === "edit" ? "내용 수정" : "내용 작성";
-    
-    React.useEffect(() => {
-      // 에디터가 로드된 후 초기값이 비어있으면 내용을 지웁니다
-      if (ref && typeof ref === 'object' && ref.current && !initialValue) {
-        const timer = setTimeout(() => {
-          try {
-            const editor = ref.current?.getInstance?.();
-            if (editor) {
-              editor.setMarkdown('');
-            }
-          } catch (error) {
-            console.log('Editor initialization:', error);
+const EditorContent = forwardRef<any, EditorContentProps>(({ mode, initialValue = "" }, ref) => {
+  const label = mode === "edit" ? "내용 수정" : "내용 작성";
+
+  React.useEffect(() => {
+    // 에디터가 로드된 후 초기값이 비어있으면 내용을 지웁니다
+    if (ref && typeof ref === "object" && ref.current && !initialValue) {
+      const timer = setTimeout(() => {
+        try {
+          const editor = ref.current?.getInstance?.();
+          if (editor) {
+            editor.setMarkdown("");
           }
-        }, 100);
-        
-        return () => clearTimeout(timer);
-      }
-    }, [ref, initialValue]);
-    
-    return (
-      <div>
-        <label htmlFor="content" className="flex items-center gap-2 text-sm font-medium text-white/70 mb-2">
-          <Upload size={16} />
-          {label} (마크다운)
-        </label>
-        <div className="border border-[#4a505c] rounded-lg overflow-hidden">
-          <TuiEditor
-            ref={ref}
-            initialValue={initialValue || ""}
-            previewStyle="vertical"
-            height="600px"
-            initialEditType="wysiwyg"
-            useCommandShortcut={true}
-            hideModeSwitch={true}
-            placeholder=""
-          />
-        </div>
+        } catch (error) {
+          console.log("Editor initialization:", error);
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [ref, initialValue]);
+
+  return (
+    <div>
+      <label htmlFor="content" className="flex items-center gap-2 text-sm font-medium text-white/70 mb-2">
+        <Upload size={16} />
+        {label} (마크다운)
+      </label>
+      <div className="border rounded-lg overflow-hidden" style={{ borderColor: COLORS.surfaceLighter }}>
+        <TuiEditor
+          ref={ref}
+          initialValue={initialValue || ""}
+          previewStyle="vertical"
+          height="600px"
+          initialEditType="wysiwyg"
+          useCommandShortcut={true}
+          hideModeSwitch={true}
+          placeholder=""
+        />
       </div>
-    );
-  }
-);
+    </div>
+  );
+});
 
 EditorContent.displayName = "EditorContent";
 

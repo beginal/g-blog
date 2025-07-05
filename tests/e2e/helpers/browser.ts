@@ -94,4 +94,8 @@ export class BrowserHelper {
       fullPage: true 
     });
   }
+
+  static async waitForTimeout(timeout: number): Promise<void> {
+    await new Promise(resolve => setTimeout(resolve, timeout));
+  }
 }

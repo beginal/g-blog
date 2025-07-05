@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import LoadingCard from "@/components/ui/LoadingCard";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { fetchPost, createPost, updatePost } from "@/lib/api/post";
+import { COLORS } from "@/config/constants";
 import {
   EditorHeader,
   EditorTitleInput,
@@ -122,7 +123,7 @@ export default function PostEditor({ mode, postId }: PostEditorProps) {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-white animate-fade-in">
       <EditorHeader mode={mode} onBack={handleCancel} />
 
-      <div className="bg-[#2c313a] p-6 sm:p-8 rounded-2xl shadow-lg border border-[#3a404d]">
+      <div className="p-6 sm:p-8 rounded-2xl shadow-lg border" style={{ backgroundColor: COLORS.surface, borderColor: COLORS.surfaceLight }}>
         <form onSubmit={handleSubmit} className="space-y-6">
           <EditorTitleInput
             mode={mode}

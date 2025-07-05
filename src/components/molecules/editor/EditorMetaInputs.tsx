@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Tag, Image as ImageIcon } from "lucide-react";
+import { COLORS } from "@/config/constants";
 
 interface EditorMetaInputsProps {
   tags: string;
@@ -30,7 +31,7 @@ export default function EditorMetaInputs({
           id="tags"
           value={tags}
           onChange={(e) => onTagsChange(e.target.value)}
-          className="w-full p-3 rounded-lg bg-[#3a404d] border border-[#4a505c] text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#6ee7b7] transition-colors"
+          className="w-full p-3 rounded-lg border text-white placeholder:text-white/50 focus:outline-none focus:ring-2 transition-colors" style={{ backgroundColor: COLORS.surfaceLight, borderColor: COLORS.surfaceLighter, '--tw-ring-color': COLORS.primary } as React.CSSProperties}
           placeholder="예: React, JavaScript, Web"
           disabled={disabled}
         />
@@ -45,7 +46,7 @@ export default function EditorMetaInputs({
           id="thumbnail"
           value={thumbnail}
           onChange={(e) => onThumbnailChange(e.target.value)}
-          className="w-full p-3 rounded-lg bg-[#3a404d] border border-[#4a505c] text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#6ee7b7] transition-colors"
+          className="w-full p-3 rounded-lg border text-white placeholder:text-white/50 focus:outline-none focus:ring-2 transition-colors" style={{ backgroundColor: COLORS.surfaceLight, borderColor: COLORS.surfaceLighter, '--tw-ring-color': COLORS.primary } as React.CSSProperties}
           placeholder="https://example.com/image.jpg"
           disabled={disabled}
         />

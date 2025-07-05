@@ -2,6 +2,7 @@
 
 import React from "react";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { COLORS } from "@/config/constants";
 
 interface EditorActionsProps {
   mode: "create" | "edit";
@@ -18,14 +19,40 @@ export default function EditorActions({ mode, loading, onCancel }: EditorActions
       <button
         type="button"
         onClick={onCancel}
-        className="flex-1 bg-[#3a404d] hover:bg-[#4a505c] text-white font-medium py-3 rounded-lg transition-colors disabled:opacity-50"
+        className="flex-1 text-white font-medium py-3 rounded-lg transition-colors disabled:opacity-50"
+        style={{
+          backgroundColor: COLORS.surfaceLight,
+        }}
+        onMouseEnter={(e) => {
+          if (!loading) {
+            e.currentTarget.style.backgroundColor = COLORS.surfaceLighter;
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!loading) {
+            e.currentTarget.style.backgroundColor = COLORS.surfaceLight;
+          }
+        }}
         disabled={loading}
       >
         취소
       </button>
       <button
         type="submit"
-        className="flex-1 bg-[#6ee7b7] text-black font-bold py-3 rounded-lg hover:bg-[#5ad1a0] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="flex-1 text-black font-bold py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        style={{
+          backgroundColor: COLORS.primary,
+        }}
+        onMouseEnter={(e) => {
+          if (!loading) {
+            e.currentTarget.style.backgroundColor = COLORS.primaryHover;
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!loading) {
+            e.currentTarget.style.backgroundColor = COLORS.primary;
+          }
+        }}
         disabled={loading}
       >
         {loading ? (
