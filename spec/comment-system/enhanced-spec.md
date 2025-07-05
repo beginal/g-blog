@@ -5,7 +5,6 @@
 - **원본 작성자**: 사용자
 - **Enhanced by**: Claude
 - **작성일**: 2025-07-05
-- **예상 작업시간**: 10-14시간 (Claude 추정)
 
 ## 📋 사용자 요구사항 분석
 
@@ -57,8 +56,15 @@ src/
 │   └── comment.types.ts                # 댓글 타입 정의
 ├── utils/
 │   └── validation.ts                   # 댓글 validation
-└── lib/
-    └── supabase.ts                     # Supabase 클라이언트 (기존 파일 활용)
+├── app/api/
+│   └── comments/
+│       ├── route.ts                    # 댓글 생성 API
+│       └── [postId]/
+│           └── route.ts                # 댓글 조회 API
+├── lib/
+│   ├── api/
+│   │   └── comment.ts                  # 댓글 API 함수
+│   └── supabase.ts                     # Supabase 클라이언트 (기존 파일 활용)
 ```
 
 ### 데이터 모델 설계
@@ -153,14 +159,66 @@ GET    /api/comments/count/[postId] # 댓글 개수 조회 (선택사항)
 2. **이슈**: 모바일에서 키보드 올라올 때 UI 가려짐
    - **해결방안**: viewport 높이 조정, 스크롤 위치 자동 조정
 
+## 📋 단계별 개발 계획
+
+### Phase 1: 기반 작업
+- **Task 1.1**: 데이터 모델 설계 및 타입 정의 (`src/types/comment.types.ts`)
+- **Task 1.2**: Supabase 테이블 생성 (comments: id, post_id, nickname, content, created_at)
+- **Task 1.3**: Validation 유틸리티 구현 (`src/utils/validation.ts`)
+
+### Phase 2: API 개발
+- **Task 2.1**: 댓글 조회 API 구현 (`src/app/api/comments/[postId]/route.ts`)
+- **Task 2.2**: 댓글 작성 API 구현 (`src/app/api/comments/route.ts`)
+- **Task 2.3**: API 에러 처리 및 테스트
+
+### Phase 3: 컴포넌트 개발
+- **Task 3.1**: useComments 훅 구현 (`src/hooks/useComments.ts`)
+- **Task 3.2**: 기본 컴포넌트 구현 (`CommentItem.tsx`, `CommentEmpty.tsx`)
+- **Task 3.3**: 댓글 목록 컴포넌트 구현 (`CommentList.tsx`)
+- **Task 3.4**: 댓글 작성 폼 구현 (`CommentForm.tsx`)
+
+### Phase 4: 통합 및 최적화
+- **Task 4.1**: CommentSection 통합 컴포넌트 (`CommentSection.tsx`, `index.ts`)
+- **Task 4.2**: 게시물 페이지에 댓글 섹션 추가
+- **Task 4.3**: 스타일링 및 반응형 조정
+
+## 🚨 예상 버그 및 대응 방안
+
+### 높은 확률 (70% 이상)
+1. **버그**: 댓글 작성 후 목록이 즉시 업데이트되지 않음
+   - **발생 조건**: 낙관적 업데이트 실패 또는 상태 동기화 문제
+   - **사전 대응**: useComments 훅에서 명확한 상태 관리 로직 구현
+   - **발생시 해결책**: 댓글 작성 후 강제로 목록 재조회
+
+2. **버그**: API 요청 실패 시 무한 로딩 상태
+   - **발생 조건**: 네트워크 오류, 서버 에러, Supabase 연결 실패
+   - **사전 대응**: try-catch 블록과 타임아웃 설정
+   - **발생시 해결책**: 에러 상태 표시 후 재시도 버튼 제공
+
+3. **버그**: 동일한 댓글 중복 제출
+   - **발생 조건**: 사용자가 빠르게 연속 클릭
+   - **사전 대응**: 제출 버튼 disabled 상태 관리
+   - **발생시 해결책**: 서버 측에서 중복 감지 및 차단
+
+### 중간 확률 (30-70%)
+4. **버그**: Supabase RLS 정책으로 인한 접근 거부
+   - **발생 조건**: Row Level Security 설정 문제
+   - **사전 대응**: 개발 초기 RLS 정책 명확히 설정
+   - **발생시 해결책**: 정책 수정 또는 익명 접근 허용
+
 ## 🧪 테스트 계획
 
 ### 필수 테스트 시나리오
-
 - [x] **기본 댓글 작성**: 정상적인 닉네임과 내용으로 댓글 작성
 - [x] **댓글 목록 표시**: 작성된 댓글이 올바른 순서로 표시
 - [x] **폼 validation**: 빈 값, 최소 글자 수 미달 시 오류 처리
 - [x] **반응형 테스트**: 모바일, 태블릿, 데스크톱에서 UI 확인
+
+### 에러 시나리오 테스트
+- [ ] **네트워크 오류**: 인터넷 연결 끊김 상황에서 댓글 작성 시도
+- [ ] **서버 오류**: API 서버 다운 시 에러 처리 확인
+- [ ] **대용량 댓글**: 매우 긴 댓글 작성 시 UI 및 성능 확인
+- [ ] **동시 접속**: 여러 사용자가 동시에 댓글 작성하는 상황
 - [x] **로딩 상태**: 댓글 작성 중 로딩 스피너 표시
 
 ### 엣지 케이스

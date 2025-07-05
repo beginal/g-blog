@@ -2,6 +2,7 @@ import { fetchPostById } from "@/data/posts";
 import { notFound } from "next/navigation";
 import { PostHeader, PostNavigation, PostContent, BackToListButton, ErrorDisplay } from "@/components/molecules/post";
 import { TableOfContents } from "@/components/molecules/post/TableOfContents";
+import { CommentSection } from "@/components/molecules/comment";
 interface PageParams {
   params: Promise<{ id: string }>;
 }
@@ -30,6 +31,9 @@ export default async function PostDetailPage({ params }: PageParams) {
       <div className="flex gap-8 mt-8">
         <div className="flex-1 max-w-4xl">
           <PostContent initialValue={post.content} />
+          
+          {/* 댓글 섹션 */}
+          <CommentSection postId={post.id} />
         </div>
 
         <aside className=" lg:block w-64">
