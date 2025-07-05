@@ -9,6 +9,10 @@ import Footer from "@/components/layout/Footer";
 export const metadata: Metadata = {
   title: "My Portfolio & Blog",
   description: "A personal portfolio and blog built with Next.js and Tailwind CSS.",
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
