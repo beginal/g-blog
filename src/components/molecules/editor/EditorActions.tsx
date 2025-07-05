@@ -19,7 +19,7 @@ export default function EditorActions({ mode, loading, onCancel }: EditorActions
       <button
         type="button"
         onClick={onCancel}
-        className="flex-1 text-white font-medium py-3 rounded-lg transition-colors disabled:opacity-50"
+        className="flex-1 text-white font-medium py-3 rounded-lg transition-colors disabled:opacity-50 cursor-pointer"
         style={{
           backgroundColor: COLORS.surfaceLight,
         }}
@@ -39,7 +39,7 @@ export default function EditorActions({ mode, loading, onCancel }: EditorActions
       </button>
       <button
         type="submit"
-        className="flex-1 text-black font-bold py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="flex-1 text-black font-bold py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
         style={{
           backgroundColor: COLORS.primary,
         }}

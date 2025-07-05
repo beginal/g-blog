@@ -69,8 +69,7 @@ function SignUpPage() {
               href="/login" 
               className="font-medium transition duration-200"
               style={{ 
-                color: COLORS.info,
-                ':hover': { color: COLORS.primary }
+                color: COLORS.info
               }}
             >
               로그인하기
@@ -208,12 +207,12 @@ function SignUpPage() {
               }}
               onMouseEnter={(e) => {
                 if (!loading) {
-                  e.target.style.backgroundColor = COLORS.primaryHover;
+                  (e.target as HTMLElement).style.backgroundColor = COLORS.primaryHover;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!loading) {
-                  e.target.style.backgroundColor = COLORS.info;
+                  (e.target as HTMLElement).style.backgroundColor = COLORS.info;
                 }
               }}
             >

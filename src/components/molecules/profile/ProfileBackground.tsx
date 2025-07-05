@@ -1,20 +1,22 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface ProfileBackgroundProps {
   show?: boolean;
+  className?: string;
 }
 
-export default function ProfileBackground({ show = true }: ProfileBackgroundProps) {
+export default function ProfileBackground({ show = true, className }: ProfileBackgroundProps) {
   if (!show) return null;
 
   return (
-    <div className="flex-shrink-0 relative">
+    <div className={cn("flex-shrink-0 relative", className)}>
       <Image
         src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=450&fit=crop&auto=format"
         alt="프로필 배경"
         width={600}
         height={450}
-        className="w-full h-48 sm:h-64 md:h-auto object-cover"
+        className="w-full h-full object-cover"
         priority
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
         placeholder="blur"

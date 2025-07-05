@@ -1,0 +1,112 @@
+/* Profile Section 수직 분할 레이아웃 */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  overflow: hidden;
+}
+
+/* A박스와 B박스의 기본 스타일 */
+.compact-profile-container {
+  flex-shrink: 0;
+  flex-grow: 0;
+  overflow: visible;
+}
+
+.patch-notes-container {
+  flex-shrink: 0;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+/* 커스텀 스크롤바 스타일 */
+.patch-notes-card .overflow-y-auto {
+  /* Webkit 브라우저 (Chrome, Safari, Edge) */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(110, 231, 183, 0.6) rgba(255, 255, 255, 0.1);
+}
+
+.patch-notes-card .overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.patch-notes-card .overflow-y-auto::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.patch-notes-card .overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(110, 231, 183, 0.6);
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.patch-notes-card .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(110, 231, 183, 0.8);
+}
+
+/* iOS Safari 스크롤 최적화 */
+.patch-notes-card .overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* 반응형 디자인 */
+
+/* 태블릿 (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .profile-section {
+    gap: 16px;
+  }
+
+  .compact-profile-container {
+    height: auto;
+    min-height: 280px;
+  }
+
+  .patch-notes-container {
+    height: calc(55vh - 8px);
+    min-height: 300px;
+  }
+}
+
+/* 태블릿 가로모드 특별 처리 */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+  .compact-profile-container {
+    height: auto;
+    min-height: 260px;
+  }
+
+  .patch-notes-container {
+    height: calc(60vh - 8px);
+    min-height: 240px;
+  }
+}
+
+/* 모바일 (< 768px) */
+@media (max-width: 767px) {
+  .profile-section {
+    gap: 12px;
+    height: auto;
+  }
+
+  .compact-profile-container {
+    height: auto;
+    min-height: 380px;
+  }
+
+  .patch-notes-container {
+    height: auto;
+    min-height: 350px;
+  }
+
+  .patch-notes-card .overflow-y-auto {
+    max-height: 250px;
+  }
+}
+
+/* CSS Custom Properties for 모바일 뷰포트 버그 해결 */
+.profile-section {
+  /* height: calc(var(--vh, 1vh) * 0); */
+}

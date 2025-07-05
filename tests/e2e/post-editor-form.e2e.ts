@@ -145,7 +145,7 @@ describe('Post Editor Form E2E Tests', () => {
         // 각 모드 전환 테스트
         for (let i = 0; i < modeButtons.length; i++) {
           await modeButtons[i].click();
-          await page.waitForTimeout(500);
+          await new Promise(resolve => setTimeout(resolve, 500));
           
           await BrowserHelper.screenshot(`editor-mode-${i}`);
         }
@@ -202,7 +202,7 @@ console.log('Hello, World!');
         
         for (let i = 0; i < testButtons.length; i++) {
           await testButtons[i].click();
-          await page.waitForTimeout(300);
+          await new Promise(resolve => setTimeout(resolve, 300));
           
           await BrowserHelper.screenshot(`toolbar-button-${i}`);
         }
@@ -231,7 +231,7 @@ console.log('Hello, World!');
         });
         
         await cancelButton.click();
-        await page.waitForTimeout(500);
+        await new Promise(resolve => setTimeout(resolve, 500));
         
         await BrowserHelper.screenshot('cancel-button-clicked');
       }
@@ -251,7 +251,7 @@ console.log('Hello, World!');
       
       if (submitButton) {
         // 버튼 초기 상태 확인
-        const initialText = await submitButton.textContent();
+        const initialText = await submitButton.evaluate(el => el.textContent);
         expect(initialText).toContain('게시물 작성');
         
         await BrowserHelper.screenshot('submit-button-initial');

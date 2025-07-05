@@ -120,7 +120,7 @@ describe('Post Editor E2E Tests', () => {
         await backButton.click();
         
         // URL 변경 확인 (이전 페이지로 이동)
-        await page.waitForTimeout(1000);
+        await new Promise(resolve => setTimeout(resolve, 1000));
         const currentUrl = page.url();
         expect(currentUrl).not.toContain('/posts/new');
       }
@@ -267,7 +267,7 @@ describe('Post Editor E2E Tests', () => {
       await page.keyboard.press('Enter');
       
       // 폼 제출 시도되었는지 확인 (validation 메시지나 로딩 상태)
-      await page.waitForTimeout(500);
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       await BrowserHelper.screenshot('post-editor-enter-submit');
     });

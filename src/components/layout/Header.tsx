@@ -60,6 +60,12 @@ const Header: React.FC = () => {
         <Link href="/" className="hover:text-white/80 transition-colors">
           Home
         </Link>
+        <Link href="/about" className="hover:text-white/80 transition-colors">
+          About
+        </Link>
+        <Link href="/projects" className="hover:text-white/80 transition-colors">
+          Projects
+        </Link>
         {/* 임시 비활성화: 로그인 상태에 따른 조건부 렌더링 */}
         <Link href="/posts/new" className="hover:text-white/80 transition-colors">
           New Post
@@ -130,6 +136,20 @@ const Header: React.FC = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Home
+            </Link>
+            <Link 
+              href="/about" 
+              className="hover:text-white/80 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link 
+              href="/projects" 
+              className="hover:text-white/80 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Projects
             </Link>
             {/* 임시 비활성화: 로그인 상태에 따른 조건부 렌더링 */}
             <Link 

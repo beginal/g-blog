@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { Trash2 } from 'lucide-react';
 import { memo, useCallback, useState } from 'react';
+
 import { deletePost } from '@/lib/api/post';
 import { cn } from '@/lib/utils';
 import type { DeleteButtonProps } from '@/types';
@@ -39,23 +40,24 @@ const DeleteButton = memo(function DeleteButton({
     }
   }, [postId, onDelete, router, showConfirm, disabled, isDeleting]);
 
-  const baseClasses = 'transition-colors focus:outline-none focus:ring-2 focus:ring-red-500';
-  const variantClasses = {
-    default: 'text-red-400 hover:text-red-300 disabled:text-red-600 disabled:opacity-50',
-    compact: 'text-red-400 hover:text-red-300 p-1 rounded',
-    button: 'px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md disabled:bg-red-800'
-  };
+  const VARIANT_CLASSES = {
+    default: 'text-red-400 hover:text-red-300 disabled:text-red-600 disabled:opacity-50 cursor-pointer',
+    compact: 'text-red-400 hover:text-red-300 p-1 rounded cursor-pointer',
+    button: 'flex items-center gap-2 px-3 py-2 text-red-400 hover:text-red-500 border border-red-200 hover:border-red-300 rounded-lg transition-colors duration-200 disabled:text-red-300 disabled:border-red-100 disabled:cursor-not-allowed cursor-pointer'
+  } as const;
+
+  const baseClasses = 'transition-all focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50';
 
   return (
     <button 
       onClick={handleDelete} 
       disabled={disabled || isDeleting}
-      className={cn(baseClasses, variantClasses[variant], className)}
+      className={cn(baseClasses, VARIANT_CLASSES[variant], className)}
       aria-label={isDeleting ? '삭제 중...' : '게시물 삭제'}
     >
       <Trash2 size={variant === 'compact' ? 16 : 20} />
       {variant === 'button' && (
-        <span className="ml-1">
+        <span className="text-sm font-medium">
           {isDeleting ? '삭제 중...' : '삭제'}
         </span>
       )}

@@ -8,10 +8,7 @@ interface UseTableOfContentsProps {
   containerSelector?: string;
 }
 
-export function useTableOfContents({ 
-  content, 
-  containerSelector = ".toast-ui-viewer" 
-}: UseTableOfContentsProps) {
+export function useTableOfContents({ content, containerSelector = ".toast-ui-viewer" }: UseTableOfContentsProps) {
   const [headers, setHeaders] = useState<TocItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -36,7 +33,6 @@ export function useTableOfContents({
     if (updatedHeaders.length > 0) {
       setHeaders(updatedHeaders);
       setIsLoading(false);
-      console.log("useTableOfContents: Headers updated", updatedHeaders);
     }
   }, [containerSelector]);
 
@@ -67,6 +63,6 @@ export function useTableOfContents({
   return {
     headers,
     isLoading,
-    updateHeaders
+    updateHeaders,
   };
 }

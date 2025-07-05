@@ -62,7 +62,7 @@ function LoginPage() {
                 '--focus-ring-color': COLORS.info,
               } as React.CSSProperties}
               onFocus={(e) => {
-                e.currentTarget.style.ringColor = COLORS.info;
+                e.currentTarget.style.borderColor = COLORS.info;
               }}
               placeholder="Enter your email"
             />
@@ -84,7 +84,7 @@ function LoginPage() {
                 '--focus-ring-color': COLORS.info,
               } as React.CSSProperties}
               onFocus={(e) => {
-                e.currentTarget.style.ringColor = COLORS.info;
+                e.currentTarget.style.borderColor = COLORS.info;
               }}
               placeholder="Enter your password"
             />
