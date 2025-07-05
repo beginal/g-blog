@@ -73,21 +73,41 @@ Claude는 다음과 같은 방식으로 와이어프레임을 활용할 수 있�
 - 데이터 표시 방식
 - 상태 변화 시나리오
 
-## 작업 프로세스
+## 🔄 새로운 작업 프로세스
 
-1. **폴더 생성**: `mkdir spec/[기능명]`
-2. **와이어프레임 저장**: `spec/[기능명]/wireframe.png`
-3. **명세서 작성**: `cp spec/template.md spec/[기능명]/spec.md`
-4. **이미지 참조**: Claude가 와이어프레임을 분석하여 명세서 작성
-5. **구현 진행**: 명세서와 이미지를 모두 참고하여 개발
-
-## 예시
-
+### 1단계: 폴더 생성 및 초기 설정
 ```bash
-# 새로운 기능 개발 시
-mkdir spec/user-profile
-# 와이어프레임 이미지 추가
-cp wireframe.png spec/user-profile/
-# 명세서 작성
-cp spec/template.md spec/user-profile/spec.md
+# npm 스크립트로 실행
+npm run create-feature [기능명]
+
+# 또는 직접 실행
+./spec/create-feature.sh [기능명]
+```
+
+### 2단계: 사용자 기능정의서 작성
+- `spec/[기능명]/user-spec.md` 파일 편집
+- 원하는 기능을 자유롭게 작성
+
+### 3단계: Claude Enhancement
+- Claude에게 "enhance 해줘" 요청
+- `enhanced-spec.md` 파일 자동 생성
+
+### 4단계: 검토 및 승인
+- enhanced-spec.md 내용 검토
+- 수정 요청 또는 승인
+
+### 5단계: 개발 계획서 작성
+- Claude에게 "개발 계획서 작성해줘" 요청
+- `implementation-plan.md` 파일 자동 생성
+- 예상 버그 및 대응방안 포함
+
+### 6단계: 개발 시작
+- 계획서에 따라 단계적 개발 진행
+
+## 📋 워크플로우 요약
+
+```
+사용자 작성 → Claude Enhance → 사용자 검토 → Claude 계획서 → 개발 시작
+    ↓              ↓              ↓              ↓            ↓
+user-spec.md → enhanced-spec.md → 검토/수정 → implementation-plan.md → 실제 개발
 ```
