@@ -30,7 +30,7 @@ export function useActiveHeader({
           }))
           .sort((a, b) => a.top - b.top);
 
-        if (visibleHeaders.length > 0) {
+        if (visibleHeaders.length > 0 && visibleHeaders[0]) {
           setActiveId(visibleHeaders[0].id);
         }
       },

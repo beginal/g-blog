@@ -1,0 +1,169 @@
+{
+  "customIcons": {
+    "JavaScript": "/icons/javascript.png",
+    "Next.js": "/icons/next-js.png",
+    "TypeScript": "/icons/typescript.png",
+    "Tailwind CSS": "/icons/tailwind-css.png",
+    "Photoshop": "/icons/photoshop.png",
+    "Figma": "/icons/figma.png"
+  },
+  "techStacks": [
+    {
+      "name": "React",
+      "category": "frontend",
+      "color": "#61DAFB",
+      "iconType": "react-icon",
+      "iconName": "FaReact"
+    },
+    {
+      "name": "Next.js",
+      "category": "frontend",
+      "color": "#000000",
+      "iconType": "custom",
+      "iconPath": "/icons/next-js.png"
+    },
+    {
+      "name": "TypeScript",
+      "category": "frontend",
+      "color": "#3178C6",
+      "iconType": "custom",
+      "iconPath": "/icons/typescript.png"
+    },
+    {
+      "name": "JavaScript",
+      "category": "frontend",
+      "color": "#F7DF1E",
+      "iconType": "custom",
+      "iconPath": "/icons/javascript.png"
+    },
+    {
+      "name": "HTML5",
+      "category": "frontend",
+      "color": "#E34C26",
+      "iconType": "react-icon",
+      "iconName": "FaHtml5"
+    },
+    {
+      "name": "CSS3",
+      "category": "frontend",
+      "color": "#1572B6",
+      "iconType": "react-icon",
+      "iconName": "FaCss3Alt"
+    },
+    {
+      "name": "SCSS",
+      "category": "frontend",
+      "color": "#CC6699",
+      "iconType": "react-icon",
+      "iconName": "FaSass"
+    },
+    {
+      "name": "Tailwind CSS",
+      "category": "frontend",
+      "color": "#06B6D4",
+      "iconType": "custom",
+      "iconPath": "/icons/tailwind-css.png"
+    },
+    {
+      "name": "Redux",
+      "category": "stateManagement",
+      "color": "#764ABC",
+      "iconType": "simple-icon",
+      "iconName": "SiRedux"
+    },
+    {
+      "name": "Zustand",
+      "category": "stateManagement",
+      "color": "#FF6B6B",
+      "iconType": "text",
+      "text": "Z"
+    },
+    {
+      "name": "MobX",
+      "category": "stateManagement",
+      "color": "#FF9955",
+      "iconType": "text",
+      "text": "MobX"
+    },
+    {
+      "name": "Firebase",
+      "category": "backend",
+      "color": "#FFCA28",
+      "iconType": "simple-icon",
+      "iconName": "SiFirebase"
+    },
+    {
+      "name": "Supabase",
+      "category": "backend",
+      "color": "#3ECF8E",
+      "iconType": "simple-icon",
+      "iconName": "SiSupabase"
+    },
+    {
+      "name": "GitHub",
+      "category": "devops",
+      "color": "#181717",
+      "iconType": "react-icon",
+      "iconName": "FaGithub"
+    },
+    {
+      "name": "AWS",
+      "category": "devops",
+      "color": "#FF9900",
+      "iconType": "react-icon",
+      "iconName": "FaAws"
+    },
+    {
+      "name": "Vercel",
+      "category": "devops",
+      "color": "#000000",
+      "iconType": "simple-icon",
+      "iconName": "SiVercel"
+    },
+    {
+      "name": "Figma",
+      "category": "design",
+      "color": "#F24E1E",
+      "iconType": "custom",
+      "iconPath": "/icons/figma.png"
+    },
+    {
+      "name": "Photoshop",
+      "category": "design",
+      "color": "#31A8FF",
+      "iconType": "custom",
+      "iconPath": "/icons/photoshop.png"
+    },
+    {
+      "name": "Notion",
+      "category": "design",
+      "color": "#000000",
+      "iconType": "simple-icon",
+      "iconName": "SiNotion"
+    },
+    {
+      "name": "Slack",
+      "category": "design",
+      "color": "#4A154B",
+      "iconType": "react-icon",
+      "iconName": "FaSlack"
+    }
+  ],
+  "techCategories": {
+    "frontend": {
+      "name": "프론트엔드"
+    },
+    "stateManagement": {
+      "name": "상태 관리"
+    },
+    "backend": {
+      "name": "백엔드"
+    },
+    "devops": {
+      "name": "환경 및 배포"
+    },
+    "design": {
+      "name": "디자인 및 협업 도구"
+    }
+  }
+}

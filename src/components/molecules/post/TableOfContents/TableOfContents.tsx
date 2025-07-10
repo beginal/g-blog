@@ -40,7 +40,7 @@ const TableOfContents = memo(function TableOfContents({
 
   // 로딩 중일 때 스켈레톤 표시
   if (isLoading) {
-    return <TableOfContentsSkeleton className={className} />;
+    return <TableOfContentsSkeleton className={className || ""} />;
   }
 
   // 헤더가 없는 경우 null 반환

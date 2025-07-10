@@ -91,7 +91,7 @@ describe('Post Editor Form E2E Tests', () => {
       
       for (let i = 0; i < tagPatterns.length; i++) {
         await page.click('input#tags', { clickCount: 3 }); // 전체 선택
-        await page.type('input#tags', tagPatterns[i]);
+        await page.type('input#tags', tagPatterns[i] || "");
         
         const inputValue = await page.$eval('input#tags', (el: any) => el.value);
         expect(inputValue).toBe(tagPatterns[i]);
@@ -118,11 +118,10 @@ describe('Post Editor Form E2E Tests', () => {
       for (let i = 0; i < urlPatterns.length; i++) {
         await page.click('input#thumbnail', { clickCount: 3 });
         if (urlPatterns[i]) {
-          await page.type('input#thumbnail', urlPatterns[i]);
+          await page.type('input#thumbnail', urlPatterns[i] || "");
         }
         
         const inputValue = await page.$eval('input#thumbnail', (el: any) => el.value);
-        const validity = await page.$eval('input#thumbnail', (el: any) => el.validity.valid);
         
         expect(inputValue).toBe(urlPatterns[i]);
         
@@ -144,7 +143,9 @@ describe('Post Editor Form E2E Tests', () => {
       if (modeButtons && modeButtons.length > 0) {
         // 각 모드 전환 테스트
         for (let i = 0; i < modeButtons.length; i++) {
-          await modeButtons[i].click();
+          if (modeButtons[i]) {
+            await modeButtons[i]!.click();
+          }
           await new Promise(resolve => setTimeout(resolve, 500));
           
           await BrowserHelper.screenshot(`editor-mode-${i}`);
@@ -201,7 +202,9 @@ console.log('Hello, World!');
         const testButtons = toolbarButtons.slice(0, 3);
         
         for (let i = 0; i < testButtons.length; i++) {
-          await testButtons[i].click();
+          if (testButtons[i]) {
+            await testButtons[i]!.click();
+          }
           await new Promise(resolve => setTimeout(resolve, 300));
           
           await BrowserHelper.screenshot(`toolbar-button-${i}`);

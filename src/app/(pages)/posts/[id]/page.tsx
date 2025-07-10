@@ -24,14 +24,19 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
       };
     }
 
-    return generatePostMetadata({
+    const metadata = {
       title: post.title,
       description: post.content.slice(0, 160).replace(/[#*`]/g, '') + "...",
       slug: resolvedParams.id,
-      image: post.thumbnail,
       publishedAt: post.created_at,
       tags: post.tags || [],
-    });
+    } as any;
+    
+    if (post.thumbnail) {
+      metadata.image = post.thumbnail;
+    }
+    
+    return generatePostMetadata(metadata);
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {

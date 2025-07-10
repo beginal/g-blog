@@ -2,84 +2,132 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
-  test:
-    name: Test & Build
+  quality-check:
+    name: Quality Check
     runs-on: ubuntu-latest
-
+    
     strategy:
       matrix:
-        node-version: [20.x]
-
+        node-version: [18.x, 20.x]
+    
     steps:
-    - name: 체크아웃
+    - name: Checkout code
       uses: actions/checkout@v4
-
-    - name: Node.js ${{ matrix.node-version }} 설정
+      
+    - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-
-    - name: 의존성 설치
+        
+    - name: Install dependencies
       run: npm ci
-
-    - name: 테스트 실행
-      run: npm run test:ci
-
-    - name: ESLint 검사
+      
+    - name: Type check
+      run: npm run type-check
+      
+    - name: Lint check
       run: npm run lint
-
-    - name: 타입 체크
-      run: npx tsc --noEmit
-
-    - name: 빌드 테스트
+      
+    - name: Format check
+      run: npm run format:check
+      
+    - name: Run unit tests
+      run: npm run test:ci
+      
+    - name: Upload coverage to Codecov
+      if: matrix.node-version == '20.x'
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        
+    - name: Build application
       run: npm run build
-
-    - name: 빌드 결과 캐시
+      
+    - name: Cache build artifacts
+      if: matrix.node-version == '20.x'
       uses: actions/cache@v4
       with:
-        path: .next
+        path: |
+          .next/cache
+          .next/static
         key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
         restore-keys: |
           ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
-  security:
-    name: Security Audit
+  e2e-tests:
+    name: E2E Tests
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
+    needs: quality-check
+    
     steps:
-    - name: 체크아웃
+    - name: Checkout code
       uses: actions/checkout@v4
-
-    - name: Node.js 설정
+      
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
         cache: 'npm'
-
-    - name: 의존성 설치
+        
+    - name: Install dependencies
       run: npm ci
+      
+    - name: Run E2E tests
+      run: npm run test:e2e:headless
+      
+    - name: Upload E2E test artifacts
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: e2e-test-results
+        path: |
+          tests/e2e/screenshots/
+          tests/e2e/videos/
+        retention-days: 30
 
-    - name: 보안 취약점 검사
-      run: npm audit --audit-level moderate
+  security-check:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run security audit
+      run: npm audit --audit-level=moderate
+      
+    - name: Check for known vulnerabilities
+      run: npx audit-ci --moderate || true
 
   deploy-preview:
     name: Deploy Preview
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    needs: test
+    needs: [quality-check, e2e-tests, security-check]
 
     steps:
-    - name: 체크아웃
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Vercel Preview 배포
+    - name: Deploy to Vercel Preview
       uses: amondnet/vercel-action@v25
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -91,13 +139,13 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: test
+    needs: [quality-check, e2e-tests, security-check]
 
     steps:
-    - name: 체크아웃
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Vercel Production 배포
+    - name: Deploy to Vercel Production
       uses: amondnet/vercel-action@v25
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}

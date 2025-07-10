@@ -114,6 +114,7 @@ const EditorContent = forwardRef<any, EditorContentProps>(({ mode, initialValue 
 
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [ref, initialValue]);
 
   return (

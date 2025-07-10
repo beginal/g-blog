@@ -1,0 +1,26 @@
+{
+  "JavaScript": {
+    "src": "/_next/image?url=https%3A%2F%2Flh8zlkkhlslw0zyz.public.blob.vercel-storage.com%2Fskills%2FJavascript-MpKcuqKobxaQkAaZf03pqCuY5wZWia.png&w=3840&q=75",
+    "alt": "Javascript"
+  },
+  "Next.js": {
+    "src": "/_next/image?url=https%3A%2F%2Flh8zlkkhlslw0zyz.public.blob.vercel-storage.com%2Fskills%2FNext.js-AhWeuPpDe5INDWIBXqSbbsxoV0OvzS.png&w=3840&q=75",
+    "alt": "Next.js"
+  },
+  "TypeScript": {
+    "src": "/_next/image?url=https%3A%2F%2Flh8zlkkhlslw0zyz.public.blob.vercel-storage.com%2Fskills%2Ftypescript-50YJFG5dzDLgPyvDvGxy6XZ6oMqjKi.png&w=3840&q=75",
+    "alt": "typescript"
+  },
+  "Tailwind CSS": {
+    "src": "/_next/image?url=https%3A%2F%2Flh8zlkkhlslw0zyz.public.blob.vercel-storage.com%2Fskills%2Ftailwind-css-Ac4YsB1L03P1CGQqjaJlIYKcWjAxtf.png&w=3840&q=75",
+    "alt": "tailwind css"
+  },
+  "Photoshop": {
+    "src": "/_next/image?url=https%3A%2F%2Flh8zlkkhlslw0zyz.public.blob.vercel-storage.com%2Fskills%2FPhotoshop-Obia0MwpqOabokIzsqb2vErqePfFpd.png&w=3840&q=75",
+    "alt": "Photoshop"
+  },
+  "Figma": {
+    "src": "/_next/image?url=https%3A%2F%2Flh8zlkkhlslw0zyz.public.blob.vercel-storage.com%2Fskills%2Ffigma-IiFO7yrdgnjBSjpxsCokIusUg6AoGO.png&w=3840&q=75",
+    "alt": "Figma"
+  }
+}

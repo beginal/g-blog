@@ -7,7 +7,7 @@ export function extractHeaders(content: string): TocItem[] {
   
   lines.forEach((line, index) => {
     const headerMatch = line.match(/^(#{1,6})\s+(.+)/);
-    if (headerMatch) {
+    if (headerMatch && headerMatch[1] && headerMatch[2]) {
       const level = headerMatch[1].length;
       const text = headerMatch[2].trim();
       

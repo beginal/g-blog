@@ -300,6 +300,109 @@
   transform: translateY(-20px);
 }
 
+/* ===== Dennis 스타일 애니메이션 ===== */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  33% {
+    transform: translateY(-15px) translateX(5px);
+  }
+  66% {
+    transform: translateY(8px) translateX(-3px);
+  }
+}
+
+@keyframes letter-bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+@keyframes gentle-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5), 0 0 30px rgba(78, 205, 196, 0.3);
+  }
+}
+
+@keyframes card-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes timeline-appear {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Dennis 스타일 애니메이션 클래스 */
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-letter-bounce {
+  animation: letter-bounce 0.6s ease-out;
+}
+
+.animate-gentle-glow {
+  animation: gentle-glow 3s ease-in-out infinite;
+}
+
+.animate-card-reveal {
+  animation: card-reveal 0.8s ease-out forwards;
+}
+
+.animate-timeline-appear {
+  animation: timeline-appear 0.6s ease-out forwards;
+}
+
+/* 개선된 호버 효과 (절제된 버전) */
+.dennis-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dennis-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.letter-interactive {
+  display: inline-block;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.letter-interactive:hover {
+  color: #ff6b6b;
+  transform: translateY(-5px) rotate(3deg) scale(1.1);
+  text-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+/* 성능 최적화된 애니메이션 */
+.gpu-accelerated {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 /* ===== 모션 감소 지원 ===== */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -313,7 +416,13 @@
   
   .animate-pulse-glow,
   .animate-float,
-  .animate-spin {
+  .animate-spin,
+  .animate-float-slow,
+  .animate-gentle-glow {
     animation: none !important;
+  }
+  
+  .letter-interactive:hover {
+    transform: none !important;
   }
 }

@@ -21,7 +21,7 @@ export function useTableOfContents({ content, containerSelector = ".toast-ui-vie
 
     headerElements.forEach((el, index) => {
       const text = el.textContent?.trim() || "";
-      const level = parseInt(el.tagName[1]);
+      const level = parseInt(el.tagName[1] || "1");
       const id = el.id || `heading-${index}`;
 
       // 빈 텍스트가 아닌 경우에만 추가

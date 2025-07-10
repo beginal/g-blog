@@ -13,7 +13,7 @@ const customJestConfig = {
   // 테스트 환경
   testEnvironment: 'jest-environment-jsdom',
   
-  // 모듈 경로 매핑 (Next.js와 동일하게) - 올바른 속성명
+  // 모듈 경로 매핑 (Next.js와 동일하게)
   moduleNameMapping: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
@@ -36,13 +36,32 @@ const customJestConfig = {
     '!src/app/**/loading.tsx',
     '!src/app/**/not-found.tsx',
     '!src/app/**/error.tsx',
+    '!src/app/**/page.tsx', // 페이지 컴포넌트는 E2E 테스트에서 다룸
+    '!src/app/api/**', // API 라우트는 별도 통합 테스트에서 다룸
+    '!src/middleware.ts', // 미들웨어는 별도 테스트에서 다룸
   ],
+  
+  // 커버리지 임계값 설정
+  coverageThreshold: {
+    global: {
+      branches: 70,
+      functions: 70,
+      lines: 70,
+      statements: 70,
+    },
+  },
+  
+  // 커버리지 리포트 설정
+  coverageReporters: ['text', 'lcov', 'html', 'json-summary'],
   
   // 테스트 실행 시 무시할 경로
   testPathIgnorePatterns: [
     '<rootDir>/.next/',
     '<rootDir>/node_modules/',
-    '<rootDir>/e2e/',
+    '<rootDir>/tests/e2e/',
+    '<rootDir>/out/',
+    '<rootDir>/build/',
+    '<rootDir>/coverage/',
   ],
   
   // 변환 설정
@@ -52,6 +71,23 @@ const customJestConfig = {
   
   // 모듈 파일 확장자
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
+  
+  // 테스트 실행 최적화
+  maxWorkers: '50%',
+  
+  // 테스트 결과 포맷팅
+  verbose: true,
+  
+  // 테스트 실행 시 콘솔 출력 제한
+  silent: false,
+  
+  // 느린 테스트 경고 설정 (5초 이상)
+  slowTestThreshold: 5,
+  
+  // 테스트 실행 전 캐시 클리어
+  clearMocks: true,
+  resetMocks: true,
+  restoreMocks: true,
 }
 
 // createJestConfig는 비동기이므로 next/jest가 설정을 로드할 수 있도록 내보냄

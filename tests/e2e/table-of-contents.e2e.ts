@@ -55,6 +55,7 @@ describe('TableOfContents E2E Tests', () => {
       // 각 버튼 테스트
       for (let i = 0; i < Math.min(tocButtons.length, 3); i++) { // 처음 3개만 테스트
         const button = tocButtons[i];
+        if (!button) continue;
         const buttonText = await button.evaluate(el => el.textContent);
         console.log(`Testing button ${i}: "${buttonText}"`);
         
@@ -93,6 +94,7 @@ describe('TableOfContents E2E Tests', () => {
       // 각 헤더의 ID 확인
       for (let i = 0; i < headers.length; i++) {
         const header = headers[i];
+        if (!header) continue;
         const id = await header.evaluate(el => el.id);
         const text = await header.evaluate(el => el.textContent);
         console.log(`Header ${i}: id="${id}", text="${text}"`);
