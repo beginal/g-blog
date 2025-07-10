@@ -8,9 +8,9 @@ import { renderItem } from '@/utils/renderItem';
 // ============================================================================
 interface TimelineItem {
   title: string;
-  organization?: string;  // Experience용
-  company?: string;       // Experience용
-  institution?: string;   // Education용
+  organization?: string; // Experience용
+  company?: string; // Experience용
+  institution?: string; // Education용
   period: string;
   description: (string | string[])[];
   skills: string[];
@@ -125,7 +125,7 @@ const Item = ({
   title: string;
 }) => (
   <div
-    className="relative flex gap-8 pb-8 last:pb-0 opacity-0 animate-timeline-appear"
+    className="relative flex gap-4 sm:gap-8 pb-4 last:pb-0 opacity-0 animate-timeline-appear"
     style={{ animationDelay: `${index * 0.3}s` }}
     role="listitem"
     aria-label={`${period} ${title}`}
@@ -161,10 +161,16 @@ const Timeline: React.FC<TimelineProps> & {
     <Section title={title} icon={icon}>
       {data.map((item, index) => {
         // 조직명 결정 (Experience면 company, Education이면 institution)
-        const organizationName = item.company || item.institution || item.organization || '';
-        
+        const organizationName =
+          item.company || item.institution || item.organization || '';
+
         return (
-          <Item key={index} index={index} period={item.period} title={item.title}>
+          <Item
+            key={index}
+            index={index}
+            period={item.period}
+            title={item.title}
+          >
             <Marker isFirst={index === 0} />
             <Content>
               <PeriodBadge period={item.period} />

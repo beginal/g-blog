@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Code,
   Monitor,
@@ -235,8 +235,8 @@ const ProjectArea = ({
     {}
   );
 
-  // iconMap 내부에서 정의
-  const iconMap = {
+  // iconMap 메모이제이션
+  const iconMap = useMemo(() => ({
     Monitor: <Monitor className="w-6 h-6 text-white" />,
     ShoppingCart: <ShoppingCart className="w-6 h-6 text-white" />,
     Users: <Users className="w-6 h-6 text-white" />,
@@ -247,25 +247,34 @@ const ProjectArea = ({
     MessageCircle: <MessageCircle className="w-6 h-6 text-white" />,
     Gamepad2: <Gamepad2 className="w-6 h-6 text-white" />,
     Code: <Code className="w-6 h-6 text-white" />,
-  } as const;
+  }), []);
 
-  // README 컨텐츠 로드
+  // README 컨텐츠 병렬 로드
   useEffect(() => {
     const loadReadmeContents = async () => {
-      const contents: Record<number, string> = {};
-
-      for (const card of projects) {
-        if (card.readmeFile) {
+      const readmePromises = projects
+        .filter(card => card.readmeFile)
+        .map(async card => {
           try {
             const response = await fetch(`/readmes/${card.readmeFile}`);
             if (response.ok) {
-              contents[card.id] = await response.text();
+              const content = await response.text();
+              return { id: card.id, content };
             }
           } catch (error) {
             console.error(`Failed to load README for card ${card.id}:`, error);
           }
+          return null;
+        });
+
+      const results = await Promise.allSettled(readmePromises);
+      const contents: Record<number, string> = {};
+      
+      results.forEach(result => {
+        if (result.status === 'fulfilled' && result.value) {
+          contents[result.value.id] = result.value.content;
         }
-      }
+      });
 
       setReadmeContents(contents);
     };

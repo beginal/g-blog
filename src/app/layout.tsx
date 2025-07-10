@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import MainWrapper from "@/components/layout/MainWrapper";
+import LayoutController from "@/components/layout/LayoutController";
 import JsonLd from "@/components/seo/JsonLd";
 import GlobalModal from "@/components/ui/GlobalModal";
 import { defaultMetadata } from "@/lib/metadata";
@@ -29,8 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd type="person" />
         {/* 임시 비활성화: AuthProvider */}
         {/* <AuthProvider> */}
-        <Header />
-        <MainWrapper>{children}</MainWrapper>
+        <LayoutController>{children}</LayoutController>
         <Footer />
         <GlobalModal />
         {/* </AuthProvider> */}

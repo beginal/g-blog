@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import {
   Code,
   Award,
@@ -22,12 +22,9 @@ const AboutPage = () => {
   const personalInfo = aboutData.personal;
 
   return (
-    <div className="min-h-screen bg-[#1a1f2e] overflow-x-hidden pt-30">
-      {/* 헤더 숨김을 위한 스타일 */}
+    <div className="min-h-screen bg-[#1a1f2e] overflow-x-hidden pt-15 sm:pt-30">
+      {/* about 페이지 전용 스타일 */}
       <style jsx global>{`
-        header {
-          display: none !important;
-        }
         .container {
           background-color: #1a1f2e !important;
         }
@@ -35,9 +32,6 @@ const AboutPage = () => {
           background-color: #1a1f2e !important;
           margin: 0 !important;
           padding: 0 !important;
-        }
-        main {
-          padding-top: 0 !important;
         }
         html {
           background-color: #1a1f2e !important;
@@ -81,13 +75,19 @@ const AboutPage = () => {
           />
 
           {/* 프로젝트 섹션 */}
-          <ProjectArea
-            title="프로젝트"
-            icon={<Code className="text-[#6ee7b7]" size={24} />}
-            projects={aboutData.projects}
-            cols={{ sm: 1, md: 1, lg: 1, xl: 1 }}
-            gap={6}
-          />
+          <Suspense fallback={
+            <div className="flex justify-center py-8">
+              <div className="w-8 h-8 border-2 border-[#6ee7b7] border-t-transparent rounded-full animate-spin" />
+            </div>
+          }>
+            <ProjectArea
+              title="프로젝트"
+              icon={<Code className="text-[#6ee7b7]" size={24} />}
+              projects={aboutData.projects}
+              cols={{ sm: 1, md: 1, lg: 1, xl: 1 }}
+              gap={6}
+            />
+          </Suspense>
         </div>
       </div>
     </div>

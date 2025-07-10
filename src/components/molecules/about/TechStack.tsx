@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   FaReact,
   FaJs,
@@ -158,7 +158,7 @@ const TechStack: React.FC<TechStackProps> & {
         )
       : fallback;
 
-  const techs: Tech[] = [
+  const techs: Tech[] = useMemo(() => [
     // Frontend
     { name: 'React', icon: FaReact, category: 'frontend', color: '#61DAFB' },
     {
@@ -256,9 +256,9 @@ const TechStack: React.FC<TechStackProps> & {
     },
     { name: 'Notion', icon: SiNotion, category: 'design', color: '#000000' },
     { name: 'Slack', icon: FaSlack, category: 'design', color: '#4A154B' },
-  ];
+  ], [createIcon]);
 
-  const categories = [
+  const categories = useMemo(() => [
     {
       key: 'frontend',
       name: '프론트엔드',
@@ -284,7 +284,7 @@ const TechStack: React.FC<TechStackProps> & {
       name: '디자인 및 협업 도구',
       techs: techs.filter(t => t.category === 'design'),
     },
-  ];
+  ], [techs]);
 
   return (
     <Section
