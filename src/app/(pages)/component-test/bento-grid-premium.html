@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>함준호 - Frontend Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #111111;
+            --card-bg: #1a1a1a;
+            --border-color: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --gradient-subtle: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 200px;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        /* 카드 기본 스타일 */
+        .bento-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .bento-card:hover::before {
+            opacity: 0.03;
+        }
+
+        /* 카드 크기 */
+        .span-4 { grid-column: span 4; }
+        .span-5 { grid-column: span 5; }
+        .span-6 { grid-column: span 6; }
+        .span-7 { grid-column: span 7; }
+        .span-8 { grid-column: span 8; }
+        .span-12 { grid-column: span 12; }
+        .row-span-2 { grid-row: span 2; }
+        .row-span-3 { grid-row: span 3; }
+
+        /* 자기소개 카드 */
+        .intro-card {
+            background: var(--gradient-subtle);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .intro-card h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .intro-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .contact-link:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* 기술 스택 카드 */
+        .tech-stack-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .tech-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tech-category {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tech-category-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .tech-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* 경력 카드 */
+        .career-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .career-timeline {
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .career-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-primary);
+        }
+
+        .career-item {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .career-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            border: 3px solid var(--card-bg);
+        }
+
+        .career-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .career-company {
+            font-size: 1rem;
+            color: var(--accent-primary);
+            margin-bottom: 4px;
+        }
+
+        .career-period {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .career-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .career-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .career-skill {
+            padding: 4px 8px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--accent-green);
+        }
+
+        /* 학력 카드 */
+        .education-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .education-item {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .education-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .education-institution {
+            font-size: 1rem;
+            color: var(--accent-secondary);
+            margin-bottom: 4px;
+        }
+
+        .education-period {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .education-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* 프로젝트 카드 */
+        .projects-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .project-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .project-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .project-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .project-period {
+            font-size: 0.9rem;
+            color: var(--accent-orange);
+            margin-bottom: 8px;
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .project-tag {
+            padding: 4px 8px;
+            background: rgba(236, 72, 153, 0.1);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--accent-pink);
+        }
+
+        /* 반응형 */
+        @media (max-width: 1200px) {
+            .bento-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+            .span-4 { grid-column: span 4; }
+            .span-5 { grid-column: span 4; }
+            .span-6 { grid-column: span 4; }
+            .span-7 { grid-column: span 4; }
+            .span-8 { grid-column: span 4; }
+            .span-12 { grid-column: span 8; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero .subtitle { font-size: 1.2rem; }
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: auto;
+            }
+            .span-4, .span-5, .span-6, .span-7, .span-8, .span-12 {
+                grid-column: span 1;
+            }
+            .row-span-2, .row-span-3 {
+                grid-row: span 1;
+            }
+        }
+
+        /* 스크롤 애니메이션 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 히어로 섹션 -->
+        <div class="hero">
+            <h1>함준호</h1>
+            <p class="subtitle">Frontend Developer</p>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+            <!-- 자기소개 카드 -->
+            <div class="bento-card intro-card span-8 row-span-2 fade-in">
+                <h2>안녕하세요, 함준호입니다!</h2>
+                <p>탑코에서 3년간 프론트엔드 개발자로 근무하며 다양한 웹 서비스의 구축과 운영, 성능 개선을 경험했습니다.</p>
+                <p>실무에서 React, TypeScript 등 다양한 프론트엔드 기술을 활용하여 사용자 경험을 최우선으로 고려한 UI/UX 개발에 집중했습니다.</p>
+                <p>현재는 더 나은 개발자가 되기 위해 지속적으로 학습하고 있으며, 새로운 기술과 도전에 열정을 가지고 있습니다.</p>
+                
+                <div class="contact-links">
+                    <a href="mailto:beginal01@gmail.com" class="contact-link">
+                        <span>📧</span> beginal01@gmail.com
+                    </a>
+                    <a href="tel:010-9215-9984" class="contact-link">
+                        <span>📱</span> 010-9215-9984
+                    </a>
+                    <a href="https://github.com/beginal" class="contact-link" target="_blank">
+                        <span>🐙</span> GitHub
+                    </a>
+                    <a href="#" class="contact-link">
+                        <span>📍</span> 서울 관악구 신림동
+                    </a>
+                </div>
+            </div>
+
+            <!-- 기술 스택 카드 -->
+            <div class="bento-card tech-stack-card span-4 row-span-3 fade-in">
+                <h3>기술 스택</h3>
+                <div class="tech-categories">
+                    <div class="tech-category">
+                        <div class="tech-category-title">프론트엔드</div>
+                        <div class="tech-items">
+                            <span class="tech-item">⚛️ React</span>
+                            <span class="tech-item">🔷 TypeScript</span>
+                            <span class="tech-item">⚡ Next.js</span>
+                            <span class="tech-item">📜 JavaScript</span>
+                            <span class="tech-item">🎨 HTML/CSS</span>
+                            <span class="tech-item">🎭 SCSS</span>
+                            <span class="tech-item">🌊 Tailwind CSS</span>
+                        </div>
+                    </div>
+                    <div class="tech-category">
+                        <div class="tech-category-title">상태 관리</div>
+                        <div class="tech-items">
+                            <span class="tech-item">🔄 Redux</span>
+                            <span class="tech-item">🎯 Recoil</span>
+                            <span class="tech-item">🐻 Zustand</span>
+                            <span class="tech-item">🏃 React Query</span>
+                            <span class="tech-item">📊 MobX</span>
+                        </div>
+                    </div>
+                    <div class="tech-category">
+                        <div class="tech-category-title">백엔드</div>
+                        <div class="tech-items">
+                            <span class="tech-item">🐍 Python</span>
+                            <span class="tech-item">🔥 Firebase</span>
+                            <span class="tech-item">⚡ Supabase</span>
+                        </div>
+                    </div>
+                    <div class="tech-category">
+                        <div class="tech-category-title">DevOps</div>
+                        <div class="tech-items">
+                            <span class="tech-item">🐙 GitHub</span>
+                            <span class="tech-item">☁️ AWS</span>
+                            <span class="tech-item">🔺 Vercel</span>
+                        </div>
+                    </div>
+                    <div class="tech-category">
+                        <div class="tech-category-title">협업 도구</div>
+                        <div class="tech-items">
+                            <span class="tech-item">🎨 Figma</span>
+                            <span class="tech-item">🖼️ Photoshop</span>
+                            <span class="tech-item">📝 Notion</span>
+                            <span class="tech-item">💬 Slack</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 경력 카드 -->
+            <div class="bento-card career-card span-8 row-span-2 fade-in">
+                <h3>경력</h3>
+                <div class="career-timeline">
+                    <div class="career-item">
+                        <h4>프론트엔드 개발자</h4>
+                        <div class="career-company">탑코 (해외서비스 개발팀)</div>
+                        <div class="career-period">2021.04 - 2023.12</div>
+                        <div class="career-desc">
+                            사내 어드민 페이지 총괄 개발 및 유지보수를 담당했습니다. JS로 작업된 코드를 TypeScript + React로 대부분 변경하고, TopToon JP 초기 개발 참여 및 유지보수, TopToon Global 개발 참여 및 유지보수를 진행했습니다. 다수의 중요 페이지 기능 구현(SNS 로그인, 결제, 마이페이지, 웹툰 리스트, 웹툰 뷰어)을 담당했습니다.
+                        </div>
+                        <div class="career-skills">
+                            <span class="career-skill">React</span>
+                            <span class="career-skill">TypeScript</span>
+                            <span class="career-skill">Next.js</span>
+                            <span class="career-skill">edgio</span>
+                            <span class="career-skill">결제 시스템</span>
+                        </div>
+                    </div>
+                    <div class="career-item">
+                        <h4>프론트엔드 개발자 인턴</h4>
+                        <div class="career-company">Rencar (개발팀)</div>
+                        <div class="career-period">2020.11 - 2020.12</div>
+                        <div class="career-desc">
+                            Rencar USA 사고 대차 서비스 모바일 페이지를 제작했습니다. Next의 getServerSideProps를 적극 활용해 SSR을 구현하고, MobX 사용으로 Store 전역관리, Atomic Design 패턴을 참고하여 Components 구성, Axios, JWT, react-token을 사용하여 토큰값 유무에 따른 페이지 접근승인을 구현했습니다.
+                        </div>
+                        <div class="career-skills">
+                            <span class="career-skill">Next.js</span>
+                            <span class="career-skill">MobX</span>
+                            <span class="career-skill">SCSS</span>
+                            <span class="career-skill">JWT</span>
+                            <span class="career-skill">Axios</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 학력 카드 -->
+            <div class="bento-card education-card span-6 fade-in">
+                <h3>학력</h3>
+                <div class="education-item">
+                    <h4>프론트엔드 개발 부트캠프</h4>
+                    <div class="education-institution">Wecode</div>
+                    <div class="education-period">2020.10 - 2020.11</div>
+                    <div class="education-desc">프론트엔드 개발에 대한 기초를 다지고 실무 프로젝트를 경험했습니다.</div>
+                </div>
+                <div class="education-item">
+                    <h4>전자상거래과</h4>
+                    <div class="education-institution">하남정보산업고등학교</div>
+                    <div class="education-period">2011.03 - 2014.02</div>
+                    <div class="education-desc">전자상거래 전공으로 졸업했습니다.</div>
+                </div>
+            </div>
+
+            <!-- 프로젝트 카드 -->
+            <div class="bento-card projects-card span-6 fade-in">
+                <h3>프로젝트</h3>
+                <div class="project-item">
+                    <div class="project-icon">💻</div>
+                    <div class="project-content">
+                        <h4>개인 블로그 프로젝트</h4>
+                        <div class="project-period">2025.07 ~ (개발 중)</div>
+                        <div class="project-desc">
+                            Next.js 15, TypeScript 5를 사용한 일상 & 개발 개인 블로그 프로젝트입니다. 
+                            Supabase를 활용한 서버 연동과 Claude AI와 협업을 통한 빠르고 안정적인 개발을 진행하고 있습니다.
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Next.js</span>
+                            <span class="project-tag">TypeScript</span>
+                            <span class="project-tag">Claude</span>
+                            <span class="project-tag">Supabase</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon">🌤️</div>
+                    <div class="project-content">
+                        <h4>날씨 앱</h4>
+                        <div class="project-period">2023.10 (2주) - 완료</div>
+                        <div class="project-desc">
+                            OpenWeatherMap API를 활용한 실시간 날씨 정보 제공 PWA 애플리케이션입니다. 
+                            Geolocation API로 현재 위치 기반 날씨 조회가 가능하며, 7일 일기예보 및 오프라인 사용도 지원합니다.
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">PWA</span>
+                            <span class="project-tag">OpenWeatherMap API</span>
+                            <span class="project-tag">Geolocation API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 스크롤 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 카드 호버 효과
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+            });
+        });
+
+        // 기술 스택 아이템 클릭 효과
+        document.querySelectorAll('.tech-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>
