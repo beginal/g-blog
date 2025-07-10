@@ -403,6 +403,19 @@
   backface-visibility: hidden;
 }
 
+/* ===== 리스트 스타일 ===== */
+.prose ul li::marker {
+  color: white;
+}
+
+.prose ul li {
+  margin: 0.25rem 0;
+}
+
+.prose ol li {
+  margin: 0.25rem 0;
+}
+
 /* ===== 모션 감소 지원 ===== */
 @media (prefers-reduced-motion: reduce) {
   *,

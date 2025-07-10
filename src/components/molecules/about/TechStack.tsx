@@ -104,8 +104,8 @@ const TechIcon = ({ tech, delay = 0 }: { tech: Tech; delay?: number }) => (
     className="group relative opacity-0 animate-card-reveal"
     style={{ animationDelay: `${delay}s` }}
   >
-    <div className="flex items-center justify-center w-12 h-12 hover:scale-110 transition-transform duration-200">
-      <tech.icon size={36} color={tech.color} />
+    <div className="flex items-center justify-center w-10 h-10 rounded-md hover:scale-110 transition-transform duration-200">
+      <tech.icon size={28} color={tech.color} />
     </div>
     <div className="absolute bottom-[-35px] left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
       {tech.name}

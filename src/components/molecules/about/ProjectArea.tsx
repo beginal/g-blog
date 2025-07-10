@@ -40,7 +40,6 @@ interface LegacyCardProps {
 
 interface CompoundCardProps {
   children: React.ReactNode;
-  projectType?: string | undefined;
   status?: string | undefined;
   className?: string | undefined;
 }
@@ -115,19 +114,34 @@ const Header = ({
   icon,
   title,
   duration,
+  projectType,
 }: {
   icon: React.ReactNode;
   title: string;
   duration?: string;
+  projectType?: string;
 }) => (
   <div className="flex items-start gap-4 mb-4">
     <div className="flex-shrink-0 p-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 transition-all duration-300 group-hover:bg-white/20 group-hover:border-white/30">
       {icon}
     </div>
     <div className="flex-1">
-      <h3 className="text-xl font-bold text-white mb-1 leading-tight">
-        {title}
-      </h3>
+      <div className="flex items-center gap-3 mb-1">
+        <h3 className="text-xl font-bold text-white leading-tight">
+          {title}
+        </h3>
+        {projectType && (
+          <span
+            className={`px-2 py-1 text-xs font-semibold rounded-full ${
+              projectType === '개발'
+                ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                : 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+            }`}
+          >
+            {projectType}
+          </span>
+        )}
+      </div>
       {duration && (
         <span className="text-sm text-emerald-300 font-medium">{duration}</span>
       )}
@@ -324,33 +338,17 @@ const ProjectArea = ({
 // 카드 컨테이너
 const Container = ({
   children,
-  projectType,
   status,
   className = '',
 }: CompoundCardProps) => (
   <div
     className={`group relative h-full flex flex-col p-6 rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/8 to-white/2 backdrop-blur-2xl transition-all duration-500 ease-out before:absolute before:inset-0 before:bg-gradient-to-br before:from-emerald-300/5 before:to-purple-600/5 before:opacity-0 before:transition-opacity before:duration-500 before:z-[-1] hover:before:opacity-100 hover:border-emerald-300/30 ${className}`}
   >
-    {/* Project Type Badge - 우상단 위쪽 */}
-    {projectType && (
-      <div className="absolute top-4 right-4 z-10">
-        <span
-          className={`px-2 py-1 text-xs font-semibold rounded-full ${
-            projectType === '개발'
-              ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-              : 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-          }`}
-        >
-          {projectType}
-        </span>
-      </div>
-    )}
-
-    {/* Status Badge - 우상단 아래쪽 */}
+    {/* Status Badge - 우상단 */}
     {status && (
       <StatusBadge
         status={status}
-        className={projectType ? 'top-12' : 'top-4'}
+        className="top-4"
       />
     )}
 
@@ -375,7 +373,6 @@ const Card: React.FC<LegacyCardProps> & {
   // Legacy mode: render as complete card
   return (
     <Container
-      projectType={props.projectType}
       status={props.status}
       className={props.className}
     >
@@ -383,6 +380,7 @@ const Card: React.FC<LegacyCardProps> & {
         icon={props.icon}
         title={props.title}
         {...(props.duration && { duration: props.duration })}
+        {...(props.projectType && { projectType: props.projectType })}
       />
       {props.summary && <Summary summary={props.summary} />}
       <Description description={props.description} />

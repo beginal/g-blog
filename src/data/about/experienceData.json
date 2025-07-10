@@ -2,7 +2,7 @@
   {
     "title": "프론트엔드 개발자",
     "company": "탑코 (해외서비스 개발팀)",
-    "period": "2021.04 - 2023.12 (2년 9개월)",
+    "period": "2021.04 - 2023.12",
     "description": [
       "**1. 레거시 어드민 리팩토링 및 기능 고도화**",
       "기존 JS 기반 어드민 페이지를 TypeScript와 React로 점진적 리팩토링을 주도하여 코드 안정성과 유지보수 효율을 향상시켰습니다.",
@@ -20,33 +20,16 @@
         "**배포 시스템 개선**: 기존 Jenkins 배포 시스템으로 구축되어 있던 것을 Edgio(구 Layer0)를 활용한 배포 시스템 으로 변경하여 서비스의 배포 안정성과 유지보수성을 높였습니다."
       ]
     ],
-    "skills": [
-      "React",
-      "TypeScript",
-      "Next.js",
-      "Zustand",
-      "Recoil",
-      "SEO 최적화",
-      "Edgio 배포",
-      "결제 시스템",
-      "권한 관리",
-      "마크다운 에디터",
-      "Jenkins"
-    ]
+    "skills": ["React", "TypeScript", "Next.js", "Zustand", "Recoil", "SEO 최적화", "Edgio 배포", "결제 시스템", "권한 관리", "마크다운 에디터", "Jenkins"]
   },
   {
     "title": "인턴",
     "company": "Rencar (개발팀)",
-    "period": "2020.11 - 2020.12 (2개월)",
+    "period": "2020.11 - 2020.12",
     "description": [
       "사고 대차 서비스 모바일 페이지 제작 프로젝트에 참여해서 Next.js 기반의 SSR을 구현했습니다.",
       "MobX를 활용한 전역 상태관리 및 Atomic Design 패턴 기반의 컴포넌트 아키텍처를 도입했습니다."
     ],
-    "skills": [
-      "Next.js",
-      "MobX",
-      "SSR",
-      "Atomic Design"
-    ]
+    "skills": ["Next.js", "MobX", "SSR", "Atomic Design"]
   }
 ]

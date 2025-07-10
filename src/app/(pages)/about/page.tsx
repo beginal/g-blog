@@ -22,7 +22,7 @@ const AboutPage = () => {
   const personalInfo = aboutData.personal;
 
   return (
-    <div className="min-h-screen bg-[#1a1f2e] overflow-x-hidden">
+    <div className="min-h-screen bg-[#1a1f2e] overflow-x-hidden pt-30">
       {/* 헤더 숨김을 위한 스타일 */}
       <style jsx global>{`
         header {
@@ -36,12 +36,15 @@ const AboutPage = () => {
           margin: 0 !important;
           padding: 0 !important;
         }
+        main {
+          padding-top: 0 !important;
+        }
         html {
           background-color: #1a1f2e !important;
         }
       `}</style>
 
-      <div className="px-6 pt-4 pb-8 sm:px-8 md:px-4">
+      <div className="px-6 pt-4 pb-16 sm:px-8 md:px-4">
         {/* Dennis 스타일 배경 장식 요소들 */}
         <BackgroundDecorations />
 

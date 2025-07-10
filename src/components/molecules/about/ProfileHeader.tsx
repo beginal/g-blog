@@ -13,8 +13,7 @@ interface PersonalInfo {
   email: string;
   phone: string;
   github: string;
-  linkedin?: string | null;
-  bio: string;
+  description: (string | string[])[];
 }
 
 interface ProfileHeaderProps {
@@ -62,8 +61,14 @@ const Title = ({ title }: { title: string }) => (
 );
 
 // 자기소개
-const Bio = ({ bio }: { bio: string }) => (
-  <p className="max-w-2xl mx-auto mb-6 leading-relaxed text-white/70">{bio}</p>
+const Bio = ({ description }: { description: (string | string[])[] }) => (
+  <div className="max-w-2xl mx-auto mb-6 leading-relaxed text-white/70">
+    {description.map((item, index) => (
+      <p key={index} className="mb-2 last:mb-0">
+        {Array.isArray(item) ? item.join(' ') : item}
+      </p>
+    ))}
+  </div>
 );
 
 // 연락처 정보
@@ -149,7 +154,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> & {
       <Avatar name={personalInfo.name} />
       <AnimatedName name={personalInfo.name} />
       <Title title={personalInfo.title} />
-      <Bio bio={personalInfo.bio} />
+      <Bio description={personalInfo.description} />
       <ContactInfo
         location={personalInfo.location}
         email={personalInfo.email}
